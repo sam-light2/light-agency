@@ -378,13 +378,13 @@ body::before {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  background: var(--ink);
+  background: #000;
   transition: transform 1s var(--ease);
 }
 .work__item:hover .work__video {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 /* Color variants — subtle gradient placeholders that look like film stills */
