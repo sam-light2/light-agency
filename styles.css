@@ -549,12 +549,17 @@ body::before {
 .approach__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 48px;
+  row-gap: 0;
   padding: 0 var(--pad-x);
   position: relative;
 }
 
 .approach__col {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
   border-top: 1px solid rgba(242, 237, 227, 0.18);
   padding-top: 32px;
 }
@@ -583,7 +588,16 @@ body::before {
 }
 
 @media (max-width: 900px) {
-  .approach__grid { grid-template-columns: 1fr; gap: 40px; }
+  .approach__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    column-gap: 0;
+    row-gap: 40px;
+  }
+  .approach__col {
+    display: block;
+    grid-row: auto;
+  }
   .approach { padding: 100px 0; }
 }
 
