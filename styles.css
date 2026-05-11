@@ -339,7 +339,7 @@ body::before {
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   padding: 0 var(--pad-x);
-  max-width: 1000px;
+  max-width: 1140px;
   margin: 0 auto;
 }
 
@@ -355,7 +355,7 @@ body::before {
 
 /* Featured Vimeo embed (PSA) */
 .work__feature {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 120px auto 0;
   padding: 0 var(--pad-x);
   display: grid;
@@ -750,24 +750,22 @@ body::before {
    ============================================================ */
 .about { padding: 140px 0; }
 
-.about__main {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 72px;
-  padding: 0 var(--pad-x);
-  max-width: 1200px;
-  margin: 0 auto 110px;
-  align-items: center;
-}
-
 .about__photo {
-  margin: 0;
+  margin: 0 auto 90px;
+  padding: 0 var(--pad-x);
+  max-width: 1400px;
 }
 .about__photo img {
   display: block;
   width: 100%;
   height: auto;
   filter: saturate(1.05) contrast(1.02);
+}
+
+.about__bio {
+  max-width: 760px;
+  padding: 0 var(--pad-x);
+  margin: 0 auto 100px;
 }
 
 .about__skills {
@@ -824,8 +822,9 @@ body::before {
 }
 
 @media (max-width: 900px) {
-  .about__main { grid-template-columns: 1fr; gap: 40px; margin-bottom: 70px; }
-  .about__bio { font-size: 20px; }
+  .about__main { display: block; }
+  .about__photo { margin-bottom: 50px; }
+  .about__bio { font-size: 20px; margin-bottom: 60px; }
   .about__skills { grid-template-columns: 1fr; gap: 40px; }
 }
 
