@@ -337,8 +337,10 @@ body::before {
 .work__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 24px;
   padding: 0 var(--pad-x);
+  max-width: 820px;
+  margin: 0 auto;
 }
 
 .work__item { grid-column: auto; }
@@ -353,7 +355,9 @@ body::before {
 
 /* Featured Vimeo embed (PSA) */
 .work__feature {
-  margin: 140px var(--pad-x) 0;
+  max-width: 820px;
+  margin: 120px auto 0;
+  padding: 0 var(--pad-x);
   display: grid;
   gap: 28px;
 }
@@ -746,11 +750,25 @@ body::before {
    ============================================================ */
 .about { padding: 140px 0; }
 
+.about__photo {
+  padding: 0 var(--pad-x);
+  margin: 0 auto 100px;
+  max-width: 1200px;
+}
+.about__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(1.05) contrast(1.02);
+}
+
 .about__grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 80px;
   padding: 0 var(--pad-x);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .about__bio {
@@ -801,6 +819,7 @@ body::before {
 @media (max-width: 900px) {
   .about__grid { grid-template-columns: 1fr; gap: 56px; }
   .about__bio { font-size: 20px; }
+  .about__photo { margin-bottom: 60px; }
 }
 
 /* ============================================================
