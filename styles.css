@@ -337,21 +337,65 @@ body::before {
 .work__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 80px 32px;
+  gap: 32px;
   padding: 0 var(--pad-x);
 }
 
-.work__item:nth-child(1) { grid-column: 1 / span 5; }
-.work__item:nth-child(2) { grid-column: 6 / span 4; margin-top: 100px; }
-.work__item:nth-child(3) { grid-column: 10 / span 3; margin-top: 220px; }
+.work__item:nth-child(1) { grid-column: 1 / span 3; }
+.work__item:nth-child(2) { grid-column: 4 / span 3; margin-top: 60px; }
+.work__item:nth-child(3) { grid-column: 7 / span 3; margin-top: 30px; }
+.work__item:nth-child(4) { grid-column: 10 / span 3; margin-top: 80px; }
 
 .work__visual {
   position: relative;
   width: 100%;
   aspect-ratio: 9 / 16;
   overflow: hidden;
-  margin-bottom: 22px;
   background: #000;
+}
+
+/* Featured Vimeo embed (PSA) */
+.work__feature {
+  margin: 140px var(--pad-x) 0;
+  display: grid;
+  gap: 28px;
+}
+
+.work__feature-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+
+.work__feature-visual iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.work__feature-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+}
+.work__feature-caption h3 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 144;
+  line-height: 1.05;
+  margin-bottom: 4px;
+}
+.work__feature-caption p {
+  font-size: 14px;
+  color: var(--ink-mute);
 }
 
 .work__placeholder {
@@ -508,11 +552,15 @@ body::before {
 .work__more:hover { color: var(--accent); }
 
 @media (max-width: 900px) {
-  .work__grid { gap: 56px 0; }
+  .work__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
   .work__item:nth-child(n) {
-    grid-column: 1 / -1 !important;
+    grid-column: auto !important;
     margin-top: 0 !important;
   }
+  .work__feature { margin-top: 80px; }
 }
 
 /* ============================================================
