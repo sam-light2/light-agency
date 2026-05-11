@@ -750,22 +750,68 @@ body::before {
    ============================================================ */
 .about { padding: 140px 0; }
 
-.about__photo {
-  margin: 0 auto 90px;
+.about__hero {
+  position: relative;
+  margin: 0 auto 110px;
   padding: 0 var(--pad-x);
   max-width: 1400px;
 }
-.about__photo img {
+.about__hero img {
   display: block;
   width: 100%;
   height: auto;
   filter: saturate(1.05) contrast(1.02);
 }
 
-.about__bio {
+/* Gradient scrim sits inside the padded area (over the image, not the side gutters) */
+.about__hero-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  background: linear-gradient(
+    to top,
+    rgba(8, 6, 4, 0.82) 0%,
+    rgba(8, 6, 4, 0.55) 22%,
+    rgba(8, 6, 4, 0.18) 42%,
+    rgba(8, 6, 4, 0) 60%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(28px, 4.5vw, 64px);
+  pointer-events: none;
+}
+
+.about__hero-text {
   max-width: 760px;
-  padding: 0 var(--pad-x);
-  margin: 0 auto 100px;
+  color: var(--cream);
+}
+
+.about__hero-lede {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.3vw, 32px);
+  font-weight: 300;
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  font-variation-settings: 'opsz' 144;
+  margin-bottom: 24px;
+}
+.about__hero-lede em {
+  font-style: italic;
+  color: var(--accent-glow);
+  font-variation-settings: 'opsz' 144, 'wght' 300;
+}
+
+.about__hero-note {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 0.95vw, 13px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 227, 0.7);
+  border-top: 1px solid rgba(242, 237, 227, 0.25);
+  padding-top: 18px;
+  max-width: 460px;
 }
 
 .about__skills {
@@ -823,8 +869,10 @@ body::before {
 
 @media (max-width: 900px) {
   .about__main { display: block; }
-  .about__photo { margin-bottom: 50px; }
-  .about__bio { font-size: 20px; margin-bottom: 60px; }
+  .about__hero { margin-bottom: 60px; }
+  .about__hero-overlay { padding: 24px; }
+  .about__hero-lede { font-size: 17px; line-height: 1.35; margin-bottom: 16px; }
+  .about__hero-note { font-size: 10px; padding-top: 14px; }
   .about__skills { grid-template-columns: 1fr; gap: 40px; }
 }
 
