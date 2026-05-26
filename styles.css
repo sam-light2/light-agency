@@ -241,15 +241,17 @@ body::before {
 .hero__sub {
   grid-column: 1 / -1;
   align-self: end;
-  max-width: 480px;
+  max-width: 620px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 34px;
 }
 .hero__sub p {
-  font-size: 19px;
-  line-height: 1.5;
-  color: rgba(242, 237, 227, 0.92);
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--cream);
+  font-weight: 400;
 }
 .hero__cta {
   display: inline-block;
@@ -777,23 +779,6 @@ body::before {
     inset 0 -80px 120px -60px rgba(18, 14, 10, 0.55);
 }
 
-.about__portrait-index {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 2;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--cream);
-  background: rgba(18, 14, 10, 0.42);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  padding: 6px 10px;
-  border-radius: 2px;
-}
-
 .about__portrait figcaption {
   margin-top: 22px;
   font-family: var(--font-mono);
@@ -966,9 +951,10 @@ body::before {
   justify-content: space-between;
   margin-top: 120px;
   padding-top: 24px;
+  padding-bottom: 40px;
   border-top: 1px solid var(--rule);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   color: var(--ink-mute);
   letter-spacing: 0.05em;
   text-align: left;
