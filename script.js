@@ -10,6 +10,25 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --------------------------------------------------------
+     Nav theme toggle: light text over the hero photo,
+     dark text once scrolled onto the cream sections.
+     -------------------------------------------------------- */
+  const nav = document.querySelector('.nav');
+  const hero = document.querySelector('.hero');
+  if (nav && hero) {
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // When the hero is mostly out of view, switch nav to dark.
+          nav.classList.toggle('nav--dark', !entry.isIntersecting);
+        });
+      },
+      { rootMargin: '-72px 0px 0px 0px', threshold: 0 }
+    );
+    navObserver.observe(hero);
+  }
+
+  /* --------------------------------------------------------
      Custom cursor (skipped on touch devices)
      -------------------------------------------------------- */
   const cursor = document.querySelector('.cursor');
