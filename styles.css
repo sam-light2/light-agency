@@ -1346,18 +1346,20 @@ body::before {
   /* Start at ink — the animation takes over immediately */
   color: var(--ink);
   font-variation-settings: 'opsz' 144, 'wght' 300;
-  animation: inlineHighlight 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: inlineHighlight 5s ease-in-out infinite;
   animation-delay: var(--hl-delay, 0s);
   will-change: color;
 }
 
 @keyframes inlineHighlight {
-  /* Hold dark */
-  0%, 18%  { color: var(--ink); }
-  /* Ramp up to coral  (matches Remotion 20%–70% interpolation) */
-  68%, 82% { color: var(--accent); }
-  /* Hold coral, then fade back to ink for seamless loop */
-  100%     { color: var(--ink); }
+  /* Brief dark hold */
+  0%, 10%   { color: var(--ink); }
+  /* Ramp up to coral */
+  28%       { color: var(--accent); }
+  /* Long coral hold — stays lit for ~2.2 s */
+  72%       { color: var(--accent); }
+  /* Fade back to dark, pause before next loop */
+  88%, 100% { color: var(--ink); }
 }
 
 /* Reduced-motion: stay coral, no animation */
