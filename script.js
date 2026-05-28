@@ -231,77 +231,7 @@
     }
   }
 
-  /* --------------------------------------------------------
-     Coverflow carousel — center card crisp, neighbors scaled
-     down + blurred, far cards hidden. Auto-advances every 4s,
-     pauses on hover, supports prev/next + keyboard arrows.
-     -------------------------------------------------------- */
-  document.querySelectorAll('[data-carousel]').forEach((root) => {
-    const cards    = Array.from(root.querySelectorAll('[data-card]'));
-    const prevBtn  = root.querySelector('[data-carousel-prev]');
-    const nextBtn  = root.querySelector('[data-carousel-next]');
-    if (!cards.length) return;
-
-    const total = cards.length;
-    let current = Math.floor(total / 2);
-    let timerId = null;
-
-    const layout = () => {
-      cards.forEach((card, i) => {
-        const offset = i - current;
-        let pos = ((offset % total) + total) % total;
-        if (pos > Math.floor(total / 2)) pos -= total;
-
-        const isCenter   = pos === 0;
-        const isAdjacent = Math.abs(pos) === 1;
-        const farAway    = Math.abs(pos) > 1;
-
-        const x       = pos * 45;       // %
-        const scale   = isCenter ? 1 : isAdjacent ? 0.85 : 0.7;
-        const rotY    = pos * -10;      // deg
-        const z       = isCenter ? 10 : isAdjacent ? 5 : 1;
-        const opacity = isCenter ? 1 : isAdjacent ? 0.4 : 0;
-        const blur    = isCenter ? 0 : 4;
-
-        card.style.setProperty('--cf-x',       `${x}%`);
-        card.style.setProperty('--cf-scale',   scale);
-        card.style.setProperty('--cf-rot',     `${rotY}deg`);
-        card.style.setProperty('--cf-z',       z);
-        card.style.setProperty('--cf-opacity', opacity);
-        card.style.setProperty('--cf-blur',    `${blur}px`);
-        card.style.setProperty('--cf-vis',     farAway ? 'hidden' : 'visible');
-        card.dataset.pos = pos;
-      });
-    };
-
-    const next = () => { current = (current + 1) % total; layout(); };
-    const prev = () => { current = (current - 1 + total) % total; layout(); };
-
-    const startTimer = () => {
-      if (reduceMotion) return;
-      stopTimer();
-      timerId = setInterval(next, 4000);
-    };
-    const stopTimer = () => {
-      if (timerId) { clearInterval(timerId); timerId = null; }
-    };
-
-    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); startTimer(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { next(); startTimer(); });
-
-    // Keyboard support when carousel is focused/hovered
-    root.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft')  { prev(); startTimer(); }
-      if (e.key === 'ArrowRight') { next(); startTimer(); }
-    });
-
-    // Pause auto-advance on hover
-    root.addEventListener('mouseenter', stopTimer);
-    root.addEventListener('mouseleave', startTimer);
-
-    layout();
-    startTimer();
-  });
+  /* Carousel removed — hero is now just the centered text stack. */
 
   /* Hero parallax removed — the marquee is the hero's motion anchor now,
      and drifting the title in the centered layout pushed it into the desc. */
