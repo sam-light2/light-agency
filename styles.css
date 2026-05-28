@@ -215,8 +215,8 @@ body::before {
    Photos fly toward camera through 3D space, title overlays with
    mix-blend-mode: difference so it inverts against whatever's behind.
    ============================================================ */
-/* Editorial hero — cream background, centered serif composition. Lets
-   typography carry the page without ornament. Matches the rest of the site. */
+/* Hero — full-bleed photo background with dark scrim. Photo adds life
+   without competing; scrim keeps cream/coral text fully legible. */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -225,8 +225,23 @@ body::before {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--ink) url('sequence2.jpg') center 20% / cover no-repeat;
+  color: var(--cream);
+}
+
+/* Dark cinematic scrim — preserves photo depth while keeping contrast */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(10, 8, 5, 0.74) 0%,
+    rgba(10, 8, 5, 0.54) 50%,
+    rgba(10, 8, 5, 0.70) 100%
+  );
+  pointer-events: none;
 }
 
 /* Centered text column */
@@ -254,15 +269,15 @@ body::before {
   line-height: 1;
 }
 
-/* Big editorial display title in ink, italic coral accents (no gradient) */
+/* Big editorial display title — cream on photo, italic coral accents */
 .hero__title {
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(44px, 8vw, 120px);
+  font-size: clamp(56px, 10vw, 148px);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-variation-settings: 'opsz' 144;
-  color: var(--ink);
+  color: var(--cream);
   margin: 0;
 }
 .hero__title-line1,
@@ -271,23 +286,23 @@ body::before {
 }
 .hero__title em {
   font-style: italic;
-  color: var(--accent);
+  color: var(--cream); /* base; inline-highlight animates to coral */
   font-variation-settings: 'opsz' 144, 'wght' 300;
 }
 
-/* Force each title line onto a single visual line at tablet+; allow wrap on phones */
-@media (min-width: 700px) {
+/* Force each title line onto a single visual line at wide viewports only */
+@media (min-width: 980px) {
   .hero__title-line1,
   .hero__title-line2 { white-space: nowrap; }
 }
 
-/* Description in ink-soft, comfortable measure */
+/* Description — soft cream on photo background */
 .hero__desc {
-  max-width: 540px;
-  font-size: clamp(16px, 1.25vw, 19px);
+  max-width: 580px;
+  font-size: clamp(17px, 1.5vw, 21px);
   line-height: 1.55;
   letter-spacing: -0.005em;
-  color: var(--ink-soft);
+  color: rgba(242, 237, 227, 0.78);
   margin: 0;
 }
 
@@ -1343,8 +1358,8 @@ body::before {
    ============================================================ */
 .inline-highlight {
   font-style: italic;
-  /* Start at ink — the animation takes over immediately */
-  color: var(--ink);
+  /* Starts cream (title is light on dark photo) then sweeps to coral */
+  color: var(--cream);
   font-variation-settings: 'opsz' 144, 'wght' 300;
   animation: inlineHighlight 5s ease-in-out infinite;
   animation-delay: var(--hl-delay, 0s);
@@ -1352,17 +1367,17 @@ body::before {
 }
 
 @keyframes inlineHighlight {
-  /* Brief dark hold */
-  0%, 10%   { color: var(--ink); }
+  /* Hold cream */
+  0%, 10%   { color: var(--cream); }
   /* Ramp up to coral */
   28%       { color: var(--accent); }
-  /* Long coral hold — stays lit for ~2.2 s */
+  /* Long coral hold — stays lit */
   72%       { color: var(--accent); }
-  /* Fade back to dark, pause before next loop */
-  88%, 100% { color: var(--ink); }
+  /* Fade back to cream, pause before next loop */
+  88%, 100% { color: var(--cream); }
 }
 
-/* Reduced-motion: stay coral, no animation */
+/* Reduced-motion: stay coral */
 @media (prefers-reduced-motion: reduce) {
   .inline-highlight {
     animation: none;
@@ -1425,20 +1440,20 @@ body::before {
   transform: translateY(-1px);
 }
 
-/* Hero CTA: pill-shaped glass button */
+/* Hero CTA: bigger pill, frosted glass tuned for dark photo background */
 .hero__cta.liquid-btn {
   display: inline-flex;
   align-items: center;
-  margin-top: 8px;
-  padding: 15px 36px;
+  margin-top: 12px;
+  padding: 18px 48px;
   border-radius: 100px;
   background: transparent;
-  color: var(--ink);
+  color: var(--cream);
   text-decoration: none;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 0.005em;
+  font-size: 17px;
+  letter-spacing: 0.01em;
   cursor: pointer;
   transition: transform 0.35s var(--ease), color 0.35s var(--ease);
 }
@@ -1446,24 +1461,39 @@ body::before {
   background: transparent;
   transform: translateY(-2px) scale(1.03);
 }
+/* Glass layer: light frost on dark — subtle white sheen, no heavy whiteness */
 .hero__cta.liquid-btn .liquid-btn__glass {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(242, 237, 227, 0.58) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow:
+    inset 0  1px 0   rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0   rgba(0, 0, 0, 0.25),
+    inset  1px 0 0   rgba(255, 255, 255, 0.18),
+    inset -1px 0 0   rgba(0, 0, 0, 0.18),
+    0 8px 28px rgba(0, 0, 0, 0.35),
+    0 2px 6px  rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.22);
 }
 .hero__cta.liquid-btn:hover .liquid-btn__glass {
   box-shadow:
-    inset 0  1px 0   rgba(255,255,255,0.95),
-    inset 0 -1px 0   rgba(24, 22, 15, 0.18),
-    inset  1px  0 0  rgba(255,255,255,0.55),
-    inset -1px  0 0  rgba(24, 22, 15, 0.12),
-    0 14px 32px rgba(24, 22, 15, 0.16),
-    0 3px 6px   rgba(24, 22, 15, 0.10);
+    inset 0  1px 0   rgba(255, 255, 255, 0.50),
+    inset 0 -1px 0   rgba(0, 0, 0, 0.30),
+    inset  1px 0 0   rgba(255, 255, 255, 0.28),
+    inset -1px 0 0   rgba(0, 0, 0, 0.22),
+    0 14px 36px rgba(0, 0, 0, 0.45),
+    0 4px 10px  rgba(0, 0, 0, 0.28);
+  border-color: rgba(255, 255, 255, 0.32);
 }
 .hero__cta.liquid-btn:hover .liquid-btn__label {
-  color: var(--accent-deep);
+  color: var(--accent-glow);
 }
 .hero__cta.liquid-btn:focus-visible {
-  outline: 2px solid var(--accent-deep);
+  outline: 2px solid var(--accent-glow);
   outline-offset: 4px;
 }
 
