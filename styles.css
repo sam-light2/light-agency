@@ -715,9 +715,13 @@ body::before {
 }
 
 @media (max-width: 600px) {
-  /* Phone: single column, everything stacks */
-  .work__grid { flex-direction: column; gap: 16px; }
-  .work__col  { flex-basis: auto; }
+  /* Phone: single column, everything stacks.
+     align-items:stretch + width:100% is REQUIRED here — in a column flex
+     container the inherited `align-items:flex-start` controls the
+     horizontal axis and would otherwise collapse each column (and its
+     width:100% videos) to zero width. */
+  .work__grid { flex-direction: column; gap: 16px; align-items: stretch; }
+  .work__col  { flex-basis: auto; width: 100%; }
 }
 
 /* ============================================================
@@ -1432,7 +1436,7 @@ body::before {
   -webkit-text-fill-color: rgb(242, 237, 227);
   animation:
     gradientShift 9s ease-in-out infinite,
-    inlineReveal 28s ease-in-out infinite;
+    inlineReveal 20s ease-in-out infinite;
   animation-delay: var(--hl-delay, 0s);
   will-change: background-position, color;
 }
@@ -1701,15 +1705,16 @@ body::before {
 @media (max-width: 560px) {
   .stats__grid { grid-template-columns: 1fr; gap: 12px; }
   .stats__grid > :last-child { grid-column: auto; }
-  /* Compact dot-cards on phones */
+  /* Compact dot-cards on phones — much shorter, smaller numerals */
+  .dot-card { padding: 5px; }
   .dot-card__card {
-    padding: 22px 22px 20px;
-    min-height: 124px;
-    border-radius: 16px;
+    padding: 18px 20px 16px;
+    min-height: 88px;
+    border-radius: 14px;
   }
-  .dot-card__value { font-size: 40px; }
-  .dot-card__label { font-size: 10px; margin-top: 8px; }
-  .dot-card__dot { width: 8px; height: 8px; }
+  .dot-card__value { font-size: 32px; }
+  .dot-card__label { font-size: 9.5px; margin-top: 6px; }
+  .dot-card__dot { width: 7px; height: 7px; }
 }
 
 /* ---------- dot-card (orbiting dot around a stat tile) ---------- */
