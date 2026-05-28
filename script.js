@@ -127,6 +127,121 @@
   });
 
   /* --------------------------------------------------------
+     Custom video player — one instance per .vp
+     -------------------------------------------------------- */
+  const formatTime = (seconds) => {
+    if (!isFinite(seconds) || seconds < 0) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const setupVideoPlayer = (root) => {
+    const video       = root.querySelector('.vp__video');
+    const playBtn     = root.querySelector('[data-vp-play]');
+    const muteBtn     = root.querySelector('[data-vp-mute]');
+    const seek        = root.querySelector('[data-vp-seek]');
+    const seekFill    = root.querySelector('[data-vp-seek-fill]');
+    const vol         = root.querySelector('[data-vp-vol]');
+    const volFill     = root.querySelector('[data-vp-vol-fill]');
+    const currentEl   = root.querySelector('[data-vp-current]');
+    const durationEl  = root.querySelector('[data-vp-duration]');
+    const speedBtns   = root.querySelectorAll('[data-vp-speed]');
+    if (!video) return;
+
+    // Reflect autoplay state
+    const reflectPlayState = () => {
+      root.classList.toggle('is-playing', !video.paused);
+      root.classList.toggle('is-paused', video.paused);
+    };
+    reflectPlayState();
+
+    // Initial volume display — videos start muted (loop autoplay)
+    const reflectVolume = () => {
+      const v = video.muted ? 0 : video.volume;
+      volFill.style.width = `${v * 100}%`;
+      root.classList.toggle('is-muted', video.muted || v === 0);
+      root.classList.toggle('is-vol-low', !video.muted && v > 0 && v <= 0.5);
+    };
+    reflectVolume();
+
+    // Play / pause
+    const toggle = () => { if (video.paused) video.play(); else video.pause(); };
+    playBtn.addEventListener('click', toggle);
+    video.addEventListener('click', toggle);
+    video.addEventListener('play',  reflectPlayState);
+    video.addEventListener('pause', reflectPlayState);
+
+    // Mute toggle
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if (!video.muted && video.volume === 0) video.volume = 1;
+      reflectVolume();
+    });
+
+    // Time / progress
+    video.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(video.duration);
+    });
+    video.addEventListener('timeupdate', () => {
+      if (!isFinite(video.duration) || video.duration === 0) return;
+      const pct = (video.currentTime / video.duration) * 100;
+      seekFill.style.width = `${pct}%`;
+      currentEl.textContent = formatTime(video.currentTime);
+      if (durationEl.textContent === '0:00') {
+        durationEl.textContent = formatTime(video.duration);
+      }
+    });
+
+    // Generic slider drag handler — works for both seek and volume
+    const wireSlider = (track, onPercent) => {
+      let dragging = false;
+      const update = (clientX) => {
+        const rect = track.getBoundingClientRect();
+        const pct = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+        onPercent(pct);
+      };
+      track.addEventListener('mousedown', (e) => {
+        dragging = true;
+        update(e.clientX);
+        e.preventDefault();
+      });
+      window.addEventListener('mousemove', (e) => { if (dragging) update(e.clientX); });
+      window.addEventListener('mouseup',   () => { dragging = false; });
+      track.addEventListener('touchstart', (e) => {
+        dragging = true;
+        update(e.touches[0].clientX);
+      }, { passive: true });
+      track.addEventListener('touchmove',  (e) => {
+        if (dragging) update(e.touches[0].clientX);
+      }, { passive: true });
+      track.addEventListener('touchend',   () => { dragging = false; });
+    };
+
+    wireSlider(seek, (pct) => {
+      if (!isFinite(video.duration) || video.duration === 0) return;
+      video.currentTime = pct * video.duration;
+      seekFill.style.width = `${pct * 100}%`;
+    });
+    wireSlider(vol, (pct) => {
+      video.volume = pct;
+      video.muted = pct === 0;
+      reflectVolume();
+    });
+
+    // Speed buttons
+    speedBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const speed = parseFloat(btn.dataset.vpSpeed);
+        video.playbackRate = speed;
+        speedBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
+      });
+    });
+  };
+
+  document.querySelectorAll('[data-vp]').forEach(setupVideoPlayer);
+
+  /* --------------------------------------------------------
      Optional: parallax-y subtle drift on hero title (only
      when motion is allowed and not on touch).
      -------------------------------------------------------- */
