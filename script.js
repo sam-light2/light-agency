@@ -10,12 +10,23 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --------------------------------------------------------
-     Nav theme: now dark-by-default (set in HTML) because the
-     new marquee hero has a light background. The previous
-     light-over-photo observer is no longer needed.
+     Nav theme toggle: light text over the dark gallery hero,
+     dark text once scrolled onto the cream sections.
      -------------------------------------------------------- */
   const nav = document.querySelector('.nav');
-  if (nav) nav.classList.add('nav--dark');
+  const hero = document.querySelector('.hero');
+  if (nav && hero) {
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // When the hero is mostly out of view, switch nav to dark text.
+          nav.classList.toggle('nav--dark', !entry.isIntersecting);
+        });
+      },
+      { rootMargin: '-72px 0px 0px 0px', threshold: 0 }
+    );
+    navObserver.observe(hero);
+  }
 
   /* --------------------------------------------------------
      Custom cursor (skipped on touch devices)

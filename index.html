@@ -30,7 +30,7 @@
   </svg>
 
   <!-- ====================== NAV ====================== -->
-  <header class="nav nav--dark">
+  <header class="nav">
     <a href="#top" class="nav__brand">Sam Light Creative</a>
     <nav class="nav__menu" aria-label="Primary">
       <a href="#work">Work</a>
@@ -41,21 +41,80 @@
   </header>
 
   <!-- ====================== HERO ====================== -->
-  <section id="top" class="hero hero--carousel">
-    <!-- Soft warm wash behind the centered stack -->
-    <div class="hero__wash" aria-hidden="true"></div>
+  <section id="top" class="hero hero--gallery">
+    <!-- Depth gallery: photos fly toward the camera through 3D space -->
+    <div class="hero__gallery" aria-hidden="true">
+      <div class="hero__plane hero__plane--1"><img src="Sequence%202.JPG" alt="" /></div>
+      <div class="hero__plane hero__plane--2"><img src="staff-02462.jpg" alt="" /></div>
+      <div class="hero__plane hero__plane--3"><img src="Sequence%202.JPG" alt="" /></div>
+      <div class="hero__plane hero__plane--4"><img src="staff-02462.jpg" alt="" /></div>
+      <div class="hero__plane hero__plane--5"><img src="Sequence%202.JPG" alt="" /></div>
+      <div class="hero__plane hero__plane--6"><img src="staff-02462.jpg" alt="" /></div>
+      <div class="hero__plane hero__plane--7"><img src="Sequence%202.JPG" alt="" /></div>
+      <div class="hero__plane hero__plane--8"><img src="Sequence%202.JPG" alt="" /></div>
+    </div>
 
-    <div class="hero__center">
+    <!-- Vignette focuses attention on center text -->
+    <div class="hero__vignette" aria-hidden="true"></div>
+
+    <!-- Foreground overlay: title with mix-blend treatment -->
+    <div class="hero__overlay">
       <h1 class="hero__title">
-        <span class="reveal">Stories that <em class="gradient-text">move</em> people</span>
-        <span class="reveal">and move <em class="gradient-text">brands.</em></span>
+        <span class="reveal">Stories that <em>move</em> people</span>
+        <span class="reveal">and move <em>brands.</em></span>
       </h1>
+      <p class="hero__desc reveal">I build video, social, and content campaigns for brands that want to land, not just launch.</p>
+      <a href="#work" class="hero__cta hero__cta--solid reveal">See selected work</a>
+    </div>
 
-      <p class="hero__desc reveal" data-whisper>I build video, social, and content campaigns for brands that want to land, not just launch.</p>
+    <!-- Soft bottom fade so the hero blends into the cream sections below -->
+    <div class="hero__bottom-fade" aria-hidden="true"></div>
+  </section>
 
-      <a href="#work" class="hero__cta hero__cta--solid reveal">
-        See selected work
-      </a>
+  <!-- ====================== STATS ====================== -->
+  <section class="stats" aria-label="Video performance">
+    <div class="stats__inner">
+      <span class="section-num reveal">— By the numbers</span>
+      <div class="stats__grid">
+        <div class="dot-card reveal" data-dot-card data-count="50000000" data-format="impressions">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Impressions</div>
+          </div>
+        </div>
+
+        <div class="dot-card reveal" data-dot-card data-count="2100000" data-format="short" style="--dot-delay: -2s">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Likes</div>
+          </div>
+        </div>
+
+        <div class="dot-card reveal" data-dot-card data-count="777000" data-format="short" style="--dot-delay: -4s">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Views</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -142,53 +201,6 @@
         <img src="staff-02462.jpg" alt="Sam Light with camera" loading="lazy" />
         <figcaption>Behind the lens · Austin, TX</figcaption>
       </figure>
-    </div>
-  </section>
-
-  <!-- ====================== STATS ====================== -->
-  <section class="stats" aria-label="Video performance">
-    <div class="stats__inner">
-      <span class="section-num reveal">— By the numbers</span>
-      <div class="stats__grid">
-        <div class="dot-card reveal" data-dot-card data-count="50000000" data-format="impressions">
-          <span class="dot-card__dot" aria-hidden="true"></span>
-          <div class="dot-card__card">
-            <span class="dot-card__ray" aria-hidden="true"></span>
-            <span class="dot-card__line dot-card__line--top"></span>
-            <span class="dot-card__line dot-card__line--right"></span>
-            <span class="dot-card__line dot-card__line--bottom"></span>
-            <span class="dot-card__line dot-card__line--left"></span>
-            <div class="dot-card__value" data-dot-value>0</div>
-            <div class="dot-card__label">Impressions</div>
-          </div>
-        </div>
-
-        <div class="dot-card reveal" data-dot-card data-count="2100000" data-format="short" style="--dot-delay: -2s">
-          <span class="dot-card__dot" aria-hidden="true"></span>
-          <div class="dot-card__card">
-            <span class="dot-card__ray" aria-hidden="true"></span>
-            <span class="dot-card__line dot-card__line--top"></span>
-            <span class="dot-card__line dot-card__line--right"></span>
-            <span class="dot-card__line dot-card__line--bottom"></span>
-            <span class="dot-card__line dot-card__line--left"></span>
-            <div class="dot-card__value" data-dot-value>0</div>
-            <div class="dot-card__label">Likes</div>
-          </div>
-        </div>
-
-        <div class="dot-card reveal" data-dot-card data-count="777000" data-format="short" style="--dot-delay: -4s">
-          <span class="dot-card__dot" aria-hidden="true"></span>
-          <div class="dot-card__card">
-            <span class="dot-card__ray" aria-hidden="true"></span>
-            <span class="dot-card__line dot-card__line--top"></span>
-            <span class="dot-card__line dot-card__line--right"></span>
-            <span class="dot-card__line dot-card__line--bottom"></span>
-            <span class="dot-card__line dot-card__line--left"></span>
-            <div class="dot-card__value" data-dot-value>0</div>
-            <div class="dot-card__label">Views</div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
