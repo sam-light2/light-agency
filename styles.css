@@ -1432,27 +1432,28 @@ body::before {
   -webkit-text-fill-color: rgb(242, 237, 227);
   animation:
     gradientShift 9s ease-in-out infinite,
-    inlineReveal 16s ease-in-out infinite;
+    inlineReveal 28s ease-in-out infinite;
   animation-delay: var(--hl-delay, 0s);
   will-change: background-position, color;
 }
 
 /* Cream → transparent (reveals gradient) → long hold → fade back to cream.
-   Alpha-only interpolation (same RGB) avoids a muddy mid-fade. */
+   Alpha-only interpolation (same RGB) avoids a muddy mid-fade.
+   Wider fade-in/out bands so each transition is slow and gradual. */
 @keyframes inlineReveal {
-  0%, 4% {
+  0%, 5% {
     color: rgb(242, 237, 227);
     -webkit-text-fill-color: rgb(242, 237, 227);
   }
-  13% {
+  22% {
     color: rgba(242, 237, 227, 0);
     -webkit-text-fill-color: rgba(242, 237, 227, 0);
   }
-  93% {
+  82% {
     color: rgba(242, 237, 227, 0);
     -webkit-text-fill-color: rgba(242, 237, 227, 0);
   }
-  99%, 100% {
+  98%, 100% {
     color: rgb(242, 237, 227);
     -webkit-text-fill-color: rgb(242, 237, 227);
   }
