@@ -1399,31 +1399,69 @@ body::before {
    Each word can stagger via --hl-delay custom property.
    ============================================================ */
 .inline-highlight {
+  position: relative;
+  display: inline-block;
   font-style: italic;
-  /* Starts cream (title is light on dark photo) then sweeps to coral */
-  color: var(--cream);
   font-variation-settings: 'opsz' 144, 'wght' 300;
-  animation: inlineHighlight 9s ease-in-out infinite;
+  line-height: inherit;
+  /* Extend the paint box past italic glyph overhang so background-clip:text
+     doesn't slice ascenders/descenders. Negative margin keeps layout neutral. */
+  padding: 0.18em 0.1em 0.16em;
+  margin: -0.18em -0.1em -0.16em;
+  /* Same animated gradient as the "work." / "Let's talk." accents — no glow */
+  background:
+    linear-gradient(
+      100deg,
+      var(--accent-deep) 0%,
+      var(--accent) 22%,
+      var(--accent-glow) 42%,
+      #FFC58A 58%,
+      var(--accent-glow) 74%,
+      var(--accent) 90%,
+      var(--accent-deep) 100%
+    );
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  /* Start cream over the photo; the reveal animation dissolves this to
+     transparent to "fade in" the gradient underneath. */
+  color: rgb(242, 237, 227);
+  -webkit-text-fill-color: rgb(242, 237, 227);
+  animation:
+    gradientShift 9s ease-in-out infinite,
+    inlineReveal 16s ease-in-out infinite;
   animation-delay: var(--hl-delay, 0s);
-  will-change: color;
+  will-change: background-position, color;
 }
 
-@keyframes inlineHighlight {
-  /* Brief cream hold */
-  0%, 6%    { color: var(--cream); }
-  /* Fade in to a warm glow-coral that pops against the photo's warm tones */
-  20%       { color: var(--accent-glow); }
-  /* Extended hold — stays lit for ~5.4 s */
-  80%       { color: var(--accent-glow); }
-  /* Quick fade back, brief pause before loop */
-  91%, 100% { color: var(--cream); }
+/* Cream → transparent (reveals gradient) → long hold → fade back to cream.
+   Alpha-only interpolation (same RGB) avoids a muddy mid-fade. */
+@keyframes inlineReveal {
+  0%, 4% {
+    color: rgb(242, 237, 227);
+    -webkit-text-fill-color: rgb(242, 237, 227);
+  }
+  13% {
+    color: rgba(242, 237, 227, 0);
+    -webkit-text-fill-color: rgba(242, 237, 227, 0);
+  }
+  93% {
+    color: rgba(242, 237, 227, 0);
+    -webkit-text-fill-color: rgba(242, 237, 227, 0);
+  }
+  99%, 100% {
+    color: rgb(242, 237, 227);
+    -webkit-text-fill-color: rgb(242, 237, 227);
+  }
 }
 
-/* Reduced-motion: stay lit */
+/* Reduced-motion: gradient revealed, static */
 @media (prefers-reduced-motion: reduce) {
   .inline-highlight {
     animation: none;
-    color: var(--accent-glow);
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 }
 
