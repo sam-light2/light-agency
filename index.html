@@ -30,7 +30,7 @@
   </svg>
 
   <!-- ====================== NAV ====================== -->
-  <header class="nav">
+  <header class="nav nav--dark">
     <a href="#top" class="nav__brand">Sam Light Creative</a>
     <nav class="nav__menu" aria-label="Primary">
       <a href="#work">Work</a>
@@ -41,29 +41,15 @@
   </header>
 
   <!-- ====================== HERO ====================== -->
-  <section id="top" class="hero hero--shapes">
-    <!-- Soft corner glow behind everything -->
-    <div class="hero__bg-glow" aria-hidden="true"></div>
-
-    <!-- Floating gradient pill shapes -->
-    <div class="hero__shapes" aria-hidden="true">
-      <div class="hero__shape hero__shape--1"><div class="hero__shape__inner"></div></div>
-      <div class="hero__shape hero__shape--2"><div class="hero__shape__inner"></div></div>
-      <div class="hero__shape hero__shape--3"><div class="hero__shape__inner"></div></div>
-      <div class="hero__shape hero__shape--4"><div class="hero__shape__inner"></div></div>
-      <div class="hero__shape hero__shape--5"><div class="hero__shape__inner"></div></div>
-    </div>
-
-    <!-- Centered content -->
+  <section id="top" class="hero hero--editorial">
     <div class="hero__overlay">
-      <div class="hero__badge hero__fade-up" style="--fade-i: 0">
-        <span class="hero__badge-dot" aria-hidden="true"></span>
-        <span class="hero__badge-text">Austin · Dallas Videographer</span>
-      </div>
+      <span class="hero__eyebrow hero__fade-up" style="--fade-i: 0">
+        — Sam Light Creative · Portfolio 2024–25
+      </span>
 
       <h1 class="hero__title hero__fade-up" style="--fade-i: 1">
-        <span class="hero__title-line1">Stories that move people</span>
-        <span class="hero__title-line2">and move brands.</span>
+        <span class="hero__title-line1">Stories that <em>move</em> people</span>
+        <span class="hero__title-line2">and move <em>brands.</em></span>
       </h1>
 
       <p class="hero__desc hero__fade-up" style="--fade-i: 2">
@@ -73,13 +59,17 @@
       <a href="#work" class="hero__cta hero__cta--solid hero__fade-up" style="--fade-i: 3">
         See selected work
       </a>
+
+      <p class="hero__note hero__fade-up" style="--fade-i: 4">
+        <em>Available for select projects — Summer 2026</em>
+      </p>
     </div>
 
-    <!-- Top + bottom dark vignette per spec -->
-    <div class="hero__vignette" aria-hidden="true"></div>
-
-    <!-- Soft fade-to-cream so the dark hero blends into the cream sections below -->
-    <div class="hero__bottom-fade" aria-hidden="true"></div>
+    <!-- Thin rule + scroll hint to anchor the bottom of the hero -->
+    <a href="#work" class="hero__scroll hero__fade-up" style="--fade-i: 5" aria-label="Scroll to selected work">
+      <span class="hero__scroll-label">Scroll</span>
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+    </a>
   </section>
 
   <!-- ====================== WORK ====================== -->

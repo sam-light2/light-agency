@@ -10,23 +10,12 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --------------------------------------------------------
-     Nav theme toggle: light text over the dark gallery hero,
-     dark text once scrolled onto the cream sections.
+     Nav theme: always dark text now that the hero is cream.
+     (Old observer toggled based on hero visibility — no longer
+     needed since every section uses a light background.)
      -------------------------------------------------------- */
   const nav = document.querySelector('.nav');
-  const hero = document.querySelector('.hero');
-  if (nav && hero) {
-    const navObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // When the hero is mostly out of view, switch nav to dark text.
-          nav.classList.toggle('nav--dark', !entry.isIntersecting);
-        });
-      },
-      { rootMargin: '-72px 0px 0px 0px', threshold: 0 }
-    );
-    navObserver.observe(hero);
-  }
+  if (nav) nav.classList.add('nav--dark');
 
   /* --------------------------------------------------------
      Custom cursor (skipped on touch devices)

@@ -215,6 +215,8 @@ body::before {
    Photos fly toward camera through 3D space, title overlays with
    mix-blend-mode: difference so it inverts against whatever's behind.
    ============================================================ */
+/* Editorial hero — cream background, centered serif composition. Lets
+   typography carry the page without ornament. Matches the rest of the site. */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -223,251 +225,77 @@ body::before {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #0a0907;     /* deeper than ink so plane edges read */
-  color: var(--cream);
-  isolation: isolate;       /* contain blend modes to the hero */
+  background: var(--cream);
+  color: var(--ink);
 }
 
-/* ---- Background glow (subtle indigo + rose corner wash) ---- */
-.hero__bg-glow {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(135deg,
-      rgba(99, 102, 241, 0.05) 0%,
-      transparent 50%,
-      rgba(244, 63, 94, 0.05) 100%);
-  filter: blur(48px);
-}
-
-/* ---- Floating gradient pill shapes ----
-   Each shape has two layered animations:
-   - Outer: drop-in entrance (opacity + translateY + rotate)
-   - Inner: infinite float (translateY back and forth) */
-.hero__shapes {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hero__shape {
-  position: absolute;
-  opacity: 0;
-  transform: translateY(-150px) rotate(var(--enter-rotate));
-  animation:
-    shapeFadeIn 1.2s ease-out var(--delay, 0s) forwards,
-    shapeEnter  2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) var(--delay, 0s) forwards;
-  will-change: transform, opacity;
-}
-
-.hero__shape__inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 9999px;
-  background: linear-gradient(to right, var(--shape-color, rgba(255,255,255,0.08)), transparent);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.10);
-  animation: shapeFloat 12s ease-in-out infinite;
-}
-.hero__shape__inner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.20), transparent 70%);
-  pointer-events: none;
-}
-
-@keyframes shapeFadeIn { to { opacity: 1; } }
-@keyframes shapeEnter  { to { transform: translateY(0) rotate(var(--rotate, 0deg)); } }
-@keyframes shapeFloat  {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(15px); }
-}
-
-/* Per-shape size, position, rotation, color, and entrance delay */
-.hero__shape--1 {
-  width: 600px; height: 140px;
-  left: -10%; top: 15%;
-  --rotate: 12deg; --enter-rotate: -3deg;
-  --delay: 0.3s;
-}
-.hero__shape--1 .hero__shape__inner { --shape-color: rgba(99, 102, 241, 0.15);  } /* indigo */
-
-.hero__shape--2 {
-  width: 500px; height: 120px;
-  right: -5%; top: 70%;
-  --rotate: -15deg; --enter-rotate: -30deg;
-  --delay: 0.5s;
-}
-.hero__shape--2 .hero__shape__inner { --shape-color: rgba(244, 63, 94, 0.15);   } /* rose */
-
-.hero__shape--3 {
-  width: 300px; height: 80px;
-  left: 5%; bottom: 5%;
-  --rotate: -8deg; --enter-rotate: -23deg;
-  --delay: 0.4s;
-}
-.hero__shape--3 .hero__shape__inner { --shape-color: rgba(139, 92, 246, 0.15);  } /* violet */
-
-.hero__shape--4 {
-  width: 200px; height: 60px;
-  right: 15%; top: 10%;
-  --rotate: 20deg; --enter-rotate: 5deg;
-  --delay: 0.6s;
-}
-.hero__shape--4 .hero__shape__inner { --shape-color: rgba(245, 158, 11, 0.15);  } /* amber */
-
-.hero__shape--5 {
-  width: 150px; height: 40px;
-  left: 20%; top: 5%;
-  --rotate: -25deg; --enter-rotate: -40deg;
-  --delay: 0.7s;
-}
-.hero__shape--5 .hero__shape__inner { --shape-color: rgba(6, 182, 212, 0.15);   } /* cyan */
-
-@media (min-width: 700px) {
-  .hero__shape--1 { left: -5%; top: 20%; }
-  .hero__shape--2 { right: 0; top: 75%; }
-  .hero__shape--3 { left: 10%; bottom: 10%; }
-  .hero__shape--4 { right: 20%; top: 15%; }
-  .hero__shape--5 { left: 25%; top: 10%; }
-}
-
-/* Vignette per spec: dark at top, transparent middle, dark at bottom */
-.hero__vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    #030303 0%,
-    transparent 50%,
-    rgba(3, 3, 3, 0.8) 100%
-  );
-}
-
-/* Soft fade at the bottom blends the dark hero into the cream sections */
-.hero__bottom-fade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%);
-}
-
-/* Centered text stack */
+/* Centered text column */
 .hero__overlay {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 24px;
-  padding: 0 var(--pad-x);
-  max-width: 880px;
+  gap: 28px;
+  padding: 120px var(--pad-x) 40px;
+  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
 }
 
-/* Fade-up entrance: each child stagger-delays via --fade-i (0..3) */
-.hero__fade-up {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: heroFadeUp 1s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
-  animation-delay: calc(0.5s + var(--fade-i, 0) * 0.2s);
-}
-@keyframes heroFadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Badge pill with rose dot */
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 14px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 8px;
-}
-.hero__badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(244, 63, 94, 0.8);   /* rose-500/80 */
-  flex-shrink: 0;
-}
-.hero__badge-text {
-  font-family: var(--font-body);
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.6);
+/* Eyebrow above the title — matches the section-num pattern used elsewhere */
+.hero__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  line-height: 1;
 }
 
-/* Big display title — gradient-clipped per line */
+/* Big editorial display title in ink, italic coral accents (no gradient) */
 .hero__title {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(40px, 8vw, 116px);
-  line-height: 1.0;
-  letter-spacing: -0.035em;
+  font-weight: 300;
+  font-size: clamp(44px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
   font-variation-settings: 'opsz' 144;
+  color: var(--ink);
   margin: 0;
 }
 .hero__title-line1,
 .hero__title-line2 {
   display: block;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  /* Extend paint box past glyph overhang */
-  padding: 0.08em 0.05em;
-  margin: -0.08em -0.05em;
 }
-.hero__title-line1 {
-  background-image: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
-}
-.hero__title-line2 {
-  background-image: linear-gradient(to right, #a5b4fc 0%, rgba(255, 255, 255, 0.9) 50%, #fda4af 100%);
-  /* indigo-300 → white/90 → rose-300 */
+.hero__title em {
+  font-style: italic;
+  color: var(--accent);
+  font-variation-settings: 'opsz' 144, 'wght' 300;
 }
 
-/* Force each title line onto a single visual line at tablet+ */
+/* Force each title line onto a single visual line at tablet+; allow wrap on phones */
 @media (min-width: 700px) {
   .hero__title-line1,
   .hero__title-line2 { white-space: nowrap; }
 }
 
-/* Description — light gray, sits beneath the title */
+/* Description in ink-soft, comfortable measure */
 .hero__desc {
-  max-width: 520px;
-  font-size: clamp(15px, 1.3vw, 20px);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.4);
-  font-weight: 300;
-  letter-spacing: 0.01em;
+  max-width: 540px;
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  color: var(--ink-soft);
   margin: 0;
 }
 
-/* Solid coral CTA — high contrast against the dark hero */
+/* Coral pill CTA — same energy as the contact email pill */
 .hero__cta--solid {
   display: inline-flex;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 8px;
   padding: 15px 32px;
   border-radius: 100px;
   background: var(--accent);
@@ -477,10 +305,11 @@ body::before {
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.005em;
+  cursor: pointer;
   box-shadow:
-    0 16px 32px rgba(229, 74, 46, 0.40),
-    0 4px 8px   rgba(229, 74, 46, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    0 12px 28px rgba(229, 74, 46, 0.28),
+    0 3px 6px   rgba(229, 74, 46, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
   transition:
     background 0.3s var(--ease),
     transform 0.3s var(--ease),
@@ -488,49 +317,100 @@ body::before {
 }
 .hero__cta--solid:hover {
   background: var(--accent-deep);
-  transform: translateY(-2px) scale(1.03);
+  transform: translateY(-2px);
   box-shadow:
-    0 20px 40px rgba(229, 74, 46, 0.5),
-    0 6px 12px  rgba(229, 74, 46, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 16px 32px rgba(229, 74, 46, 0.36),
+    0 5px 10px  rgba(229, 74, 46, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
 }
-.hero__cta--solid:active { transform: translateY(0) scale(0.98); }
+.hero__cta--solid:active { transform: translateY(0); }
+.hero__cta--solid:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 4px;
+}
 
+/* Small italic "available" note — feels like a magazine masthead */
+.hero__note {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.005em;
+  color: var(--ink-mute);
+  margin: 4px 0 0;
+  font-variation-settings: 'opsz' 144, 'wght' 400;
+}
+
+/* Scroll cue anchored to the bottom of the hero */
+.hero__scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink-mute);
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.hero__scroll:hover {
+  color: var(--accent);
+  transform: translateX(-50%) translateY(2px);
+}
+.hero__scroll-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--ink-mute) 0%, transparent 100%);
+  display: block;
+}
+
+/* Standard underline-on-hover link */
 .link {
   text-decoration: none;
   border-bottom: 1px solid currentColor;
   padding-bottom: 1px;
 }
-.link:hover { color: var(--accent-glow); }
+.link:hover { color: var(--accent); }
+
+/* Fade-up entrance: each child stagger-delays via --fade-i */
+.hero__fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeUp 0.9s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
+  animation-delay: calc(0.15s + var(--fade-i, 0) * 0.12s);
+}
+@keyframes heroFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
 
 @media (max-width: 900px) {
-  .hero__overlay { gap: 20px; }
-  .hero__shape--1 { width: 360px; height: 90px; }
-  .hero__shape--2 { width: 320px; height: 80px; }
-  .hero__shape--3 { width: 220px; height: 60px; }
-  .hero__shape--4 { width: 160px; height: 50px; }
-  .hero__shape--5 { width: 120px; height: 32px; }
+  .hero__overlay { gap: 22px; padding-top: 100px; }
+  .hero__scroll { bottom: 24px; }
 }
 
 @media (max-width: 600px) {
-  .hero__bottom-fade { height: 80px; }
-  .hero__badge-text { font-size: 12px; }
+  .hero__overlay { gap: 20px; }
+  .hero__note { font-size: 13px; }
 }
 
-/* Respect reduced-motion: skip the entrance + float, hold final pose */
 @media (prefers-reduced-motion: reduce) {
-  .hero__shape {
-    opacity: 1;
-    transform: rotate(var(--rotate, 0deg));
-    animation: none;
-  }
-  .hero__shape__inner { animation: none; }
   .hero__fade-up { opacity: 1; transform: none; animation: none; }
 }
 
-/* Hide any now-unused legacy hero layers if old markup is still around */
-.hero__bg, .hero__scrim, .hero__sub, .hero__wash,
-.hero__center, .hero__gallery, .hero__plane { display: none; }
+/* Hide any legacy hero layers if old markup is still around */
+.hero__bg, .hero__scrim, .hero__sub, .hero__wash, .hero__center,
+.hero__gallery, .hero__plane, .hero__shapes, .hero__shape,
+.hero__vignette, .hero__bottom-fade, .hero__bg-glow,
+.hero__badge { display: none; }
 
 /* ============================================================
    WORK
