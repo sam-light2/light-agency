@@ -715,13 +715,15 @@ body::before {
 }
 
 @media (max-width: 600px) {
-  /* Phone: single column, everything stacks.
-     align-items:stretch + width:100% is REQUIRED here — in a column flex
-     container the inherited `align-items:flex-start` controls the
-     horizontal axis and would otherwise collapse each column (and its
-     width:100% videos) to zero width. */
-  .work__grid { flex-direction: column; gap: 16px; align-items: stretch; }
-  .work__col  { flex-basis: auto; width: 100%; }
+  /* Phone: 2-up grid so videos are smaller. Flatten the col wrappers
+     with display:contents so all 6 tiles grid directly into 2 columns. */
+  .work__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  .work__col { display: contents; }
 }
 
 /* ============================================================
@@ -1436,7 +1438,7 @@ body::before {
   -webkit-text-fill-color: rgb(242, 237, 227);
   animation:
     gradientShift 9s ease-in-out infinite,
-    inlineReveal 20s ease-in-out infinite;
+    inlineReveal 14s ease-in-out infinite;
   animation-delay: var(--hl-delay, 0s);
   will-change: background-position, color;
 }
