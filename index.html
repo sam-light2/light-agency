@@ -12,6 +12,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Three.js (ES module) for the hero depth gallery -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -42,16 +51,13 @@
 
   <!-- ====================== HERO ====================== -->
   <section id="top" class="hero hero--gallery">
-    <!-- Depth gallery: photos fly toward the camera through 3D space -->
-    <div class="hero__gallery" aria-hidden="true">
-      <div class="hero__plane hero__plane--1"><img src="Sequence%202.JPG" alt="" /></div>
-      <div class="hero__plane hero__plane--2"><img src="staff-02462.jpg" alt="" /></div>
-      <div class="hero__plane hero__plane--3"><img src="Sequence%202.JPG" alt="" /></div>
-      <div class="hero__plane hero__plane--4"><img src="staff-02462.jpg" alt="" /></div>
-      <div class="hero__plane hero__plane--5"><img src="Sequence%202.JPG" alt="" /></div>
-      <div class="hero__plane hero__plane--6"><img src="staff-02462.jpg" alt="" /></div>
-      <div class="hero__plane hero__plane--7"><img src="Sequence%202.JPG" alt="" /></div>
-      <div class="hero__plane hero__plane--8"><img src="Sequence%202.JPG" alt="" /></div>
+    <!-- Three.js depth gallery — cloth-shader planes flying through Z -->
+    <div class="hero__canvas-wrap" aria-hidden="true" data-gallery
+         data-gallery-images="Sequence%202.JPG,staff-02462.jpg">
+      <!-- Image fallback for no-WebGL devices, hidden once Three.js mounts -->
+      <div class="hero__gallery-fallback" aria-hidden="true">
+        <img src="Sequence%202.JPG" alt="" />
+      </div>
     </div>
 
     <!-- Vignette focuses attention on center text -->
@@ -69,53 +75,6 @@
 
     <!-- Soft bottom fade so the hero blends into the cream sections below -->
     <div class="hero__bottom-fade" aria-hidden="true"></div>
-  </section>
-
-  <!-- ====================== STATS ====================== -->
-  <section class="stats" aria-label="Video performance">
-    <div class="stats__inner">
-      <span class="section-num reveal">— By the numbers</span>
-      <div class="stats__grid">
-        <div class="dot-card reveal" data-dot-card data-count="50000000" data-format="impressions">
-          <span class="dot-card__dot" aria-hidden="true"></span>
-          <div class="dot-card__card">
-            <span class="dot-card__ray" aria-hidden="true"></span>
-            <span class="dot-card__line dot-card__line--top"></span>
-            <span class="dot-card__line dot-card__line--right"></span>
-            <span class="dot-card__line dot-card__line--bottom"></span>
-            <span class="dot-card__line dot-card__line--left"></span>
-            <div class="dot-card__value" data-dot-value>0</div>
-            <div class="dot-card__label">Impressions</div>
-          </div>
-        </div>
-
-        <div class="dot-card reveal" data-dot-card data-count="2100000" data-format="short" style="--dot-delay: -2s">
-          <span class="dot-card__dot" aria-hidden="true"></span>
-          <div class="dot-card__card">
-            <span class="dot-card__ray" aria-hidden="true"></span>
-            <span class="dot-card__line dot-card__line--top"></span>
-            <span class="dot-card__line dot-card__line--right"></span>
-            <span class="dot-card__line dot-card__line--bottom"></span>
-            <span class="dot-card__line dot-card__line--left"></span>
-            <div class="dot-card__value" data-dot-value>0</div>
-            <div class="dot-card__label">Likes</div>
-          </div>
-        </div>
-
-        <div class="dot-card reveal" data-dot-card data-count="777000" data-format="short" style="--dot-delay: -4s">
-          <span class="dot-card__dot" aria-hidden="true"></span>
-          <div class="dot-card__card">
-            <span class="dot-card__ray" aria-hidden="true"></span>
-            <span class="dot-card__line dot-card__line--top"></span>
-            <span class="dot-card__line dot-card__line--right"></span>
-            <span class="dot-card__line dot-card__line--bottom"></span>
-            <span class="dot-card__line dot-card__line--left"></span>
-            <div class="dot-card__value" data-dot-value>0</div>
-            <div class="dot-card__label">Views</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ====================== WORK ====================== -->
@@ -204,6 +163,53 @@
     </div>
   </section>
 
+  <!-- ====================== STATS ====================== -->
+  <section class="stats stats--after-about" aria-label="Video performance">
+    <div class="stats__inner">
+      <span class="section-num reveal">— By the numbers</span>
+      <div class="stats__grid">
+        <div class="dot-card reveal" data-dot-card data-count="50000000" data-format="impressions">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Impressions</div>
+          </div>
+        </div>
+
+        <div class="dot-card reveal" data-dot-card data-count="2100000" data-format="short" style="--dot-delay: -2s">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Likes</div>
+          </div>
+        </div>
+
+        <div class="dot-card reveal" data-dot-card data-count="777000" data-format="short" style="--dot-delay: -4s">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Views</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ====================== APPROACH ====================== -->
   <section id="approach" class="approach">
     <div class="section-head">
@@ -255,5 +261,6 @@
   </section>
 
   <script src="script.js"></script>
+  <script type="module" src="gallery.js"></script>
 </body>
 </html>

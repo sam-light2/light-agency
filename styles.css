@@ -228,84 +228,35 @@ body::before {
   isolation: isolate;       /* contain blend modes to the hero */
 }
 
-/* 3D gallery container */
-.hero__gallery {
+/* Three.js canvas container — fills the hero, sits behind the overlay */
+.hero__canvas-wrap {
   position: absolute;
   inset: 0;
   z-index: 0;
-  perspective: 1400px;
-  perspective-origin: 50% 50%;
-  transform-style: preserve-3d;
-  pointer-events: none;
+  overflow: hidden;
+  background: #0a0907;
+}
+.hero__canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
-.hero__plane {
+/* Static image fallback for no-WebGL devices */
+.hero__gallery-fallback {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(180px, 22vw, 320px);
-  aspect-ratio: 4 / 5;
-  margin-top: 0;
-  margin-left: 0;
-  transform-origin: center center;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #111;
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.55),
-    0 10px 20px rgba(0, 0, 0, 0.35);
-  animation: planeFly 22s linear infinite;
-  will-change: transform, opacity, filter;
+  inset: 0;
+  display: none;
 }
-.hero__plane img {
+.hero__gallery-fallback img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  filter: contrast(1.05) brightness(0.92);
+  opacity: 0.7;
+  filter: contrast(1.05) brightness(0.85);
 }
-
-/* Per-plane offsets + animation delays so they fly through at different
-   times and from different spatial positions. CSS variables feed the
-   keyframes so each plane has its own path. */
-.hero__plane--1 { --px: -32vw; --py: -18vh; --rot: -6deg; animation-delay:   0s; }
-.hero__plane--2 { --px:  28vw; --py:  20vh; --rot:  7deg; animation-delay:  -2.7s; }
-.hero__plane--3 { --px: -20vw; --py:  24vh; --rot:  4deg; animation-delay:  -5.5s; }
-.hero__plane--4 { --px:  35vw; --py: -22vh; --rot: -8deg; animation-delay:  -8.2s; }
-.hero__plane--5 { --px: -42vw; --py:   6vh; --rot:  3deg; animation-delay: -11.0s; }
-.hero__plane--6 { --px:  12vw; --py: -28vh; --rot: -4deg; animation-delay: -13.7s; }
-.hero__plane--7 { --px:  -8vw; --py:  32vh; --rot:  6deg; animation-delay: -16.5s; }
-.hero__plane--8 { --px:  40vw; --py:  -4vh; --rot: -5deg; animation-delay: -19.2s; }
-
-/* Z animates from far behind to past the camera; opacity + blur shape
-   the fade in/out so planes appear from the void and dissolve as they
-   pass the viewer. */
-@keyframes planeFly {
-  0% {
-    transform:
-      translate3d(var(--px), var(--py), -1800px)
-      translate(-50%, -50%)
-      rotateY(var(--rot));
-    opacity: 0;
-    filter: blur(8px);
-  }
-  12% {
-    opacity: 0.92;
-    filter: blur(0);
-  }
-  78% {
-    opacity: 0.92;
-    filter: blur(0);
-  }
-  100% {
-    transform:
-      translate3d(var(--px), var(--py), 600px)
-      translate(-50%, -50%)
-      rotateY(calc(var(--rot) * -1));
-    opacity: 0;
-    filter: blur(6px);
-  }
-}
+.hero__canvas-wrap--no-webgl .hero__gallery-fallback { display: block; }
+.hero__canvas-wrap--no-webgl .hero__canvas { display: none; }
 
 /* Vignette darkens the corners so the center reads clean */
 .hero__vignette {
@@ -420,23 +371,13 @@ body::before {
 
 @media (max-width: 900px) {
   .hero__overlay { gap: 22px; }
-  .hero__plane { width: clamp(140px, 30vw, 220px); }
 }
 
 @media (max-width: 600px) {
-  .hero__plane { width: clamp(120px, 38vw, 180px); }
   .hero__bottom-fade { height: 80px; }
 }
-
-/* Pause the gallery if user prefers reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .hero__plane { animation: none; opacity: 0.5; }
-  .hero__plane--1 { transform: translate(-50%, -50%) translate3d(-30vw, -20vh, -800px); }
-  .hero__plane--5 { transform: translate(-50%, -50%) translate3d( 30vw,  10vh, -600px); }
-  .hero__plane--7 { transform: translate(-50%, -50%) translate3d(-10vw,  20vh, -400px); }
-  .hero__plane--2, .hero__plane--3, .hero__plane--4,
-  .hero__plane--6, .hero__plane--8 { display: none; }
-}
+/* (Reduced-motion handling for the Three.js gallery lives in gallery.js —
+   it skips the auto-play velocity increment so planes stay still.) */
 
 /* Hide the now-unused hero photo layers if any markup still references them */
 .hero__bg, .hero__scrim, .hero__sub, .hero__wash, .hero__center { display: none; }
@@ -1522,6 +1463,17 @@ body::before {
      don't feel crammed against the dark hero edge. */
   padding: 140px var(--pad-x) 80px;
   background: var(--cream);
+}
+
+/* When stats sits directly under about, tight spacing — pulls up into
+   about's bottom padding so it reads as a continuation rather than a
+   separate floating section. */
+.stats--after-about {
+  padding: 0 var(--pad-x) 40px;
+  margin-top: -90px;
+}
+.stats--after-about .section-num {
+  margin-bottom: 20px;
 }
 .stats__inner {
   max-width: 1140px;
