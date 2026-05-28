@@ -12,15 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Three.js (ES module) for the hero depth gallery -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-    }
-  }
-  </script>
 </head>
 <body>
 
@@ -50,30 +41,44 @@
   </header>
 
   <!-- ====================== HERO ====================== -->
-  <section id="top" class="hero hero--gallery">
-    <!-- Three.js depth gallery — cloth-shader planes flying through Z -->
-    <div class="hero__canvas-wrap" aria-hidden="true" data-gallery
-         data-gallery-images="Sequence%202.JPG,staff-02462.jpg">
-      <!-- Image fallback for no-WebGL devices, hidden once Three.js mounts -->
-      <div class="hero__gallery-fallback" aria-hidden="true">
-        <img src="Sequence%202.JPG" alt="" />
-      </div>
+  <section id="top" class="hero hero--shapes">
+    <!-- Soft corner glow behind everything -->
+    <div class="hero__bg-glow" aria-hidden="true"></div>
+
+    <!-- Floating gradient pill shapes -->
+    <div class="hero__shapes" aria-hidden="true">
+      <div class="hero__shape hero__shape--1"><div class="hero__shape__inner"></div></div>
+      <div class="hero__shape hero__shape--2"><div class="hero__shape__inner"></div></div>
+      <div class="hero__shape hero__shape--3"><div class="hero__shape__inner"></div></div>
+      <div class="hero__shape hero__shape--4"><div class="hero__shape__inner"></div></div>
+      <div class="hero__shape hero__shape--5"><div class="hero__shape__inner"></div></div>
     </div>
 
-    <!-- Vignette focuses attention on center text -->
+    <!-- Centered content -->
+    <div class="hero__overlay">
+      <div class="hero__badge hero__fade-up" style="--fade-i: 0">
+        <span class="hero__badge-dot" aria-hidden="true"></span>
+        <span class="hero__badge-text">Austin · Dallas Videographer</span>
+      </div>
+
+      <h1 class="hero__title hero__fade-up" style="--fade-i: 1">
+        <span class="hero__title-line1">Stories that move people</span>
+        <span class="hero__title-line2">and move brands.</span>
+      </h1>
+
+      <p class="hero__desc hero__fade-up" style="--fade-i: 2">
+        I build video, social, and content campaigns for brands that want to land, not just launch.
+      </p>
+
+      <a href="#work" class="hero__cta hero__cta--solid hero__fade-up" style="--fade-i: 3">
+        See selected work
+      </a>
+    </div>
+
+    <!-- Top + bottom dark vignette per spec -->
     <div class="hero__vignette" aria-hidden="true"></div>
 
-    <!-- Foreground overlay: title with mix-blend treatment -->
-    <div class="hero__overlay">
-      <h1 class="hero__title">
-        <span class="reveal">Stories that <em>move</em> people</span>
-        <span class="reveal">and move <em>brands.</em></span>
-      </h1>
-      <p class="hero__desc reveal">I build video, social, and content campaigns for brands that want to land, not just launch.</p>
-      <a href="#work" class="hero__cta hero__cta--solid reveal">See selected work</a>
-    </div>
-
-    <!-- Soft bottom fade so the hero blends into the cream sections below -->
+    <!-- Soft fade-to-cream so the dark hero blends into the cream sections below -->
     <div class="hero__bottom-fade" aria-hidden="true"></div>
   </section>
 
@@ -261,6 +266,5 @@
   </section>
 
   <script src="script.js"></script>
-  <script type="module" src="gallery.js"></script>
 </body>
 </html>
