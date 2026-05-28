@@ -127,6 +127,56 @@
   });
 
   /* --------------------------------------------------------
+     Whisper text — wrap each word in a span, stagger-reveal
+     on scroll into view. Drop a [data-whisper] attr on any
+     text-only element to opt in.
+     -------------------------------------------------------- */
+  const setupWhisper = (el) => {
+    // Only split if it's pure text (no children we'd lose)
+    if (el.dataset.whisperReady === '1') return;
+    const raw = el.textContent.trim();
+    if (!raw) return;
+
+    const words = raw.split(/\s+/);
+    el.textContent = '';
+    const frag = document.createDocumentFragment();
+    words.forEach((w, i) => {
+      const span = document.createElement('span');
+      span.className = 'whisper-word';
+      span.textContent = w;
+      // staggered delay per word
+      span.style.transitionDelay = `${i * 0.06}s`;
+      frag.appendChild(span);
+    });
+    el.appendChild(frag);
+    el.dataset.whisperReady = '1';
+  };
+
+  const whisperEls = document.querySelectorAll('[data-whisper]');
+  whisperEls.forEach(setupWhisper);
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const whisperIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.whisper-word').forEach((w) => {
+              w.classList.add('is-in');
+            });
+            whisperIO.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    );
+    whisperEls.forEach((el) => whisperIO.observe(el));
+  } else {
+    whisperEls.forEach((el) => {
+      el.querySelectorAll('.whisper-word').forEach((w) => w.classList.add('is-in'));
+    });
+  }
+
+  /* --------------------------------------------------------
      Custom video player — one instance per .vp
      -------------------------------------------------------- */
   const formatTime = (seconds) => {
