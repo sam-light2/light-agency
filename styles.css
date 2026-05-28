@@ -229,18 +229,27 @@ body::before {
   color: var(--cream);
 }
 
-/* Dark cinematic scrim — preserves photo depth while keeping contrast */
+/* Dark cinematic scrim — directional wash + a focused radial pool behind
+   the centered text so the headline separates from the photo while the
+   edges still read as a real image (keeps the cinematic depth). */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(10, 8, 5, 0.74) 0%,
-    rgba(10, 8, 5, 0.54) 50%,
-    rgba(10, 8, 5, 0.70) 100%
-  );
+  background:
+    radial-gradient(
+      ellipse 78% 62% at 50% 48%,
+      rgba(10, 8, 5, 0.58) 0%,
+      rgba(10, 8, 5, 0.28) 45%,
+      rgba(10, 8, 5, 0) 72%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(10, 8, 5, 0.70) 0%,
+      rgba(10, 8, 5, 0.46) 50%,
+      rgba(10, 8, 5, 0.66) 100%
+    );
   pointer-events: none;
 }
 
@@ -279,6 +288,10 @@ body::before {
   font-variation-settings: 'opsz' 144;
   color: var(--cream);
   margin: 0;
+  /* Soft shadow lifts the serif off the busy photo without a visible box */
+  text-shadow:
+    0 1px 2px rgba(10, 8, 5, 0.45),
+    0 2px 30px rgba(10, 8, 5, 0.55);
 }
 .hero__title-line1,
 .hero__title-line2 {
@@ -298,12 +311,22 @@ body::before {
 
 /* Description — soft cream on photo background */
 .hero__desc {
-  max-width: 580px;
-  font-size: clamp(17px, 1.5vw, 21px);
+  max-width: none;
+  font-size: clamp(19px, 1.9vw, 25px);
   line-height: 1.55;
   letter-spacing: -0.005em;
-  color: rgba(242, 237, 227, 0.78);
+  color: rgba(242, 237, 227, 0.82);
   margin: 0;
+  text-shadow: 0 1px 18px rgba(10, 8, 5, 0.5);
+  white-space: nowrap;
+}
+/* Re-enable wrapping on narrower screens */
+@media (max-width: 860px) {
+  .hero__desc {
+    white-space: normal;
+    max-width: 520px;
+    font-size: clamp(17px, 3.5vw, 21px);
+  }
 }
 
 /* Coral pill CTA — same energy as the contact email pill */
@@ -433,7 +456,7 @@ body::before {
 .work {
   /* Reduced top padding because stats section now sits directly above
      and already provides ~80px of buffer at its bottom. */
-  padding: 100px 0 120px;
+  padding: 100px 0 60px;
   position: relative;
 }
 
@@ -1057,6 +1080,20 @@ body::before {
   .about__portrait img { border-radius: 22px; }
 }
 
+/* Mobile only: compact spec list + tighter spacing so the
+   portrait sits higher up the page. */
+@media (max-width: 600px) {
+  .about__spread { gap: 24px; }
+  .about__bio-lead { margin-bottom: 26px; }
+  .about__spec {
+    grid-template-columns: 84px 1fr;
+    gap: 12px;
+    padding: 11px 0;
+  }
+  .about__spec dt { font-size: 9.5px; letter-spacing: 0.1em; }
+  .about__spec dd { font-size: 13.5px; line-height: 1.35; }
+}
+
 /* ============================================================
    CONTACT
    ============================================================ */
@@ -1348,8 +1385,9 @@ body::before {
   letter-spacing: inherit;
 }
 
-/* Work + contact sections: suppress the bloom glow */
+/* Work, about, contact: suppress the bloom glow */
 .work .gradient-text::before,
+.about .gradient-text::before,
 .contact .gradient-text::before { content: none; }
 
 /* ============================================================
@@ -1373,19 +1411,19 @@ body::before {
 @keyframes inlineHighlight {
   /* Brief cream hold */
   0%, 6%    { color: var(--cream); }
-  /* Fade in to coral */
-  20%       { color: var(--accent); }
-  /* Extended coral hold — stays lit for ~5.4 s */
-  80%       { color: var(--accent); }
+  /* Fade in to a warm glow-coral that pops against the photo's warm tones */
+  20%       { color: var(--accent-glow); }
+  /* Extended hold — stays lit for ~5.4 s */
+  80%       { color: var(--accent-glow); }
   /* Quick fade back, brief pause before loop */
   91%, 100% { color: var(--cream); }
 }
 
-/* Reduced-motion: stay coral */
+/* Reduced-motion: stay lit */
 @media (prefers-reduced-motion: reduce) {
   .inline-highlight {
     animation: none;
-    color: var(--accent);
+    color: var(--accent-glow);
   }
 }
 

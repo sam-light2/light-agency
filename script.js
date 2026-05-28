@@ -32,6 +32,46 @@
   }
 
   /* --------------------------------------------------------
+     Work videos — reliable mobile playback.
+     Mobile browsers often refuse to autoplay several <video>
+     elements at once (data-saver / battery policies), and iOS
+     only honours `muted` when it's set as a JS property. We
+     enforce muted + inline, then play/pause based on viewport
+     visibility so only on-screen clips run.
+     -------------------------------------------------------- */
+  const workVideos = document.querySelectorAll('.work__video');
+  if (workVideos.length) {
+    workVideos.forEach((v) => {
+      v.muted = true;            // property form — required by iOS
+      v.defaultMuted = true;
+      v.playsInline = true;
+      v.setAttribute('muted', '');
+      v.setAttribute('playsinline', '');
+      v.setAttribute('webkit-playsinline', '');
+    });
+
+    const tryPlay = (v) => {
+      const p = v.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    };
+
+    if ('IntersectionObserver' in window) {
+      const videoIO = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) tryPlay(entry.target);
+            else entry.target.pause();
+          });
+        },
+        { threshold: 0.25 }
+      );
+      workVideos.forEach((v) => videoIO.observe(v));
+    } else {
+      workVideos.forEach(tryPlay);
+    }
+  }
+
+  /* --------------------------------------------------------
      Custom cursor (skipped on touch devices)
      -------------------------------------------------------- */
   const cursor = document.querySelector('.cursor');
