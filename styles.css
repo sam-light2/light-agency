@@ -253,7 +253,7 @@ body::before {
   align-items: center;
   text-align: center;
   gap: 28px;
-  padding: 120px var(--pad-x) 40px;
+  padding: 80px var(--pad-x);
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
@@ -1348,8 +1348,9 @@ body::before {
   letter-spacing: inherit;
 }
 
-/* Work section: suppress the bloom glow behind "work." */
-.work .gradient-text::before { content: none; }
+/* Work + contact sections: suppress the bloom glow */
+.work .gradient-text::before,
+.contact .gradient-text::before { content: none; }
 
 /* ============================================================
    INLINE HIGHLIGHT — hero title words ("move", "brands.")

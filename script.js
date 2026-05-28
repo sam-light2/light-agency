@@ -10,12 +10,26 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --------------------------------------------------------
-     Nav theme: always dark text now that the hero is cream.
-     (Old observer toggled based on hero visibility — no longer
-     needed since every section uses a light background.)
+     Nav theme: transparent (cream text) over the photo hero,
+     crossfades to the frosted cream backdrop once the hero
+     scrolls out of view.
      -------------------------------------------------------- */
   const nav = document.querySelector('.nav');
-  if (nav) nav.classList.add('nav--dark');
+  const heroSection = document.querySelector('.hero');
+
+  if (nav && heroSection) {
+    const navObserver = new IntersectionObserver(
+      ([entry]) => {
+        // Hero visible → transparent nav. Hero gone → dark nav.
+        nav.classList.toggle('nav--dark', !entry.isIntersecting);
+      },
+      { threshold: 0.08 }
+    );
+    navObserver.observe(heroSection);
+  } else if (nav) {
+    // No hero on page — always use dark nav.
+    nav.classList.add('nav--dark');
+  }
 
   /* --------------------------------------------------------
      Custom cursor (skipped on touch devices)
