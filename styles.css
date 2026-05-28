@@ -1334,6 +1334,102 @@ body::before {
 }
 
 /* ============================================================
+   GRADIENT TEXT BLOB — hero title words ("move", "brands.")
+   Four drifting colour blobs sit inside an overflow:hidden
+   container and paint over the text via mix-blend-mode:overlay.
+   Container is isolated so blending stays scoped to the word.
+   ============================================================ */
+.gt-word {
+  position: relative;
+  display: inline-block;
+  /* Slightly generous box so italic glyphs don't clip */
+  padding: 0.08em 0.06em;
+  margin: -0.08em -0.06em;
+  overflow: hidden;
+  isolation: isolate;
+  vertical-align: baseline;
+}
+
+.gt-text {
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+  /* Start warm coral; blobs will shift the perceived hue as they drift */
+  color: var(--accent);
+  font-variation-settings: 'opsz' 144, 'wght' 300;
+}
+
+/* All four blobs share this base */
+.gt-blob {
+  position: absolute;
+  inset: 0;
+  width: 75%;
+  height: 120%;
+  border-radius: 50%;
+  mix-blend-mode: overlay;
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform;
+  opacity: 0.85;
+}
+
+/* Warm coral — drifts top-left → bottom-right */
+.gt-blob--1 {
+  background: #FF6B4A;
+  top: -20%; left: -10%;
+  animation: gtDrift1 7s ease-in-out infinite;
+}
+/* Amber — drifts right side */
+.gt-blob--2 {
+  background: #FFB347;
+  top: -15%; right: -10%;
+  animation: gtDrift2 9s ease-in-out infinite;
+  animation-delay: -3s;
+}
+/* Deep coral — anchors lower-left */
+.gt-blob--3 {
+  background: #C13A22;
+  bottom: -20%; left: 15%;
+  animation: gtDrift3 11s ease-in-out infinite;
+  animation-delay: -6s;
+}
+/* Warm peach — light highlight, upper-right */
+.gt-blob--4 {
+  background: #FFD4C0;
+  top: 5%; right: 15%;
+  width: 55%;
+  animation: gtDrift4 8s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+
+@keyframes gtDrift1 {
+  0%, 100% { transform: translate(0,    0  ) scale(1);    }
+  35%      { transform: translate(75%,  25%) scale(1.12); }
+  70%      { transform: translate(15%,  85%) scale(0.94); }
+}
+@keyframes gtDrift2 {
+  0%, 100% { transform: translate(0,    0  ) scale(1.05); }
+  40%      { transform: translate(-85%, 15%) scale(1);    }
+  75%      { transform: translate(-30%, -45%) scale(1.1); }
+}
+@keyframes gtDrift3 {
+  0%, 100% { transform: translate(0,    0  ) scale(0.9);  }
+  30%      { transform: translate(-35%, -65%) scale(1.1); }
+  65%      { transform: translate(65%, -15%) scale(1);    }
+}
+@keyframes gtDrift4 {
+  0%, 100% { transform: translate(0,    0  ) scale(1.1);  }
+  45%      { transform: translate(-55%, 45%) scale(0.95); }
+  80%      { transform: translate(25%, -35%) scale(1.05); }
+}
+
+/* Reduced-motion: freeze blobs in their start positions */
+@media (prefers-reduced-motion: reduce) {
+  .gt-blob { animation: none; }
+}
+
+/* ============================================================
    LIQUID GLASS BUTTON
    Backdrop blur + inset shadow stack + SVG displacement filter
    ============================================================ */
@@ -1388,22 +1484,46 @@ body::before {
   transform: translateY(-1px);
 }
 
-/* Hero CTA: keep the existing pill shape but layer glass underneath */
+/* Hero CTA: pill-shaped glass button */
 .hero__cta.liquid-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 15px 36px;
+  border-radius: 100px;
   background: transparent;
   color: var(--ink);
-  position: relative;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease), color 0.35s var(--ease);
 }
 .hero__cta.liquid-btn:hover {
   background: transparent;
-  color: var(--ink);
+  transform: translateY(-2px) scale(1.03);
 }
 .hero__cta.liquid-btn .liquid-btn__glass {
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(242, 237, 227, 0.55) 100%);
+    linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(242, 237, 227, 0.58) 100%);
+}
+.hero__cta.liquid-btn:hover .liquid-btn__glass {
+  box-shadow:
+    inset 0  1px 0   rgba(255,255,255,0.95),
+    inset 0 -1px 0   rgba(24, 22, 15, 0.18),
+    inset  1px  0 0  rgba(255,255,255,0.55),
+    inset -1px  0 0  rgba(24, 22, 15, 0.12),
+    0 14px 32px rgba(24, 22, 15, 0.16),
+    0 3px 6px   rgba(24, 22, 15, 0.10);
 }
 .hero__cta.liquid-btn:hover .liquid-btn__label {
   color: var(--accent-deep);
+}
+.hero__cta.liquid-btn:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 4px;
 }
 
 /* Contact email pill */
