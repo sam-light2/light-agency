@@ -1334,99 +1334,38 @@ body::before {
 }
 
 /* ============================================================
-   GRADIENT TEXT BLOB — hero title words ("move", "brands.")
-   Four drifting colour blobs sit inside an overflow:hidden
-   container and paint over the text via mix-blend-mode:overlay.
-   Container is isolated so blending stays scoped to the word.
+   INLINE HIGHLIGHT — hero title words ("move", "brands.")
+   Ports the Remotion InlineHighlight component to vanilla CSS.
+   The word starts dark (ink), interpolates to coral (accent),
+   holds there, then fades back — matching the frame interpolation
+   logic: 0–20% dark, 20–70% ramp, 70–100% coral, then loops.
+   Each word can stagger via --hl-delay custom property.
    ============================================================ */
-.gt-word {
-  position: relative;
-  display: inline-block;
-  /* Slightly generous box so italic glyphs don't clip */
-  padding: 0.08em 0.06em;
-  margin: -0.08em -0.06em;
-  overflow: hidden;
-  isolation: isolate;
-  vertical-align: baseline;
-}
-
-.gt-text {
-  position: relative;
-  z-index: 1;
+.inline-highlight {
   font-style: italic;
-  /* Start warm coral; blobs will shift the perceived hue as they drift */
-  color: var(--accent);
+  /* Start at ink — the animation takes over immediately */
+  color: var(--ink);
   font-variation-settings: 'opsz' 144, 'wght' 300;
+  animation: inlineHighlight 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: var(--hl-delay, 0s);
+  will-change: color;
 }
 
-/* All four blobs share this base */
-.gt-blob {
-  position: absolute;
-  inset: 0;
-  width: 75%;
-  height: 120%;
-  border-radius: 50%;
-  mix-blend-mode: overlay;
-  filter: blur(18px);
-  pointer-events: none;
-  z-index: 2;
-  will-change: transform;
-  opacity: 0.85;
+@keyframes inlineHighlight {
+  /* Hold dark */
+  0%, 18%  { color: var(--ink); }
+  /* Ramp up to coral  (matches Remotion 20%–70% interpolation) */
+  68%, 82% { color: var(--accent); }
+  /* Hold coral, then fade back to ink for seamless loop */
+  100%     { color: var(--ink); }
 }
 
-/* Warm coral — drifts top-left → bottom-right */
-.gt-blob--1 {
-  background: #FF6B4A;
-  top: -20%; left: -10%;
-  animation: gtDrift1 7s ease-in-out infinite;
-}
-/* Amber — drifts right side */
-.gt-blob--2 {
-  background: #FFB347;
-  top: -15%; right: -10%;
-  animation: gtDrift2 9s ease-in-out infinite;
-  animation-delay: -3s;
-}
-/* Deep coral — anchors lower-left */
-.gt-blob--3 {
-  background: #C13A22;
-  bottom: -20%; left: 15%;
-  animation: gtDrift3 11s ease-in-out infinite;
-  animation-delay: -6s;
-}
-/* Warm peach — light highlight, upper-right */
-.gt-blob--4 {
-  background: #FFD4C0;
-  top: 5%; right: 15%;
-  width: 55%;
-  animation: gtDrift4 8s ease-in-out infinite;
-  animation-delay: -1.5s;
-}
-
-@keyframes gtDrift1 {
-  0%, 100% { transform: translate(0,    0  ) scale(1);    }
-  35%      { transform: translate(75%,  25%) scale(1.12); }
-  70%      { transform: translate(15%,  85%) scale(0.94); }
-}
-@keyframes gtDrift2 {
-  0%, 100% { transform: translate(0,    0  ) scale(1.05); }
-  40%      { transform: translate(-85%, 15%) scale(1);    }
-  75%      { transform: translate(-30%, -45%) scale(1.1); }
-}
-@keyframes gtDrift3 {
-  0%, 100% { transform: translate(0,    0  ) scale(0.9);  }
-  30%      { transform: translate(-35%, -65%) scale(1.1); }
-  65%      { transform: translate(65%, -15%) scale(1);    }
-}
-@keyframes gtDrift4 {
-  0%, 100% { transform: translate(0,    0  ) scale(1.1);  }
-  45%      { transform: translate(-55%, 45%) scale(0.95); }
-  80%      { transform: translate(25%, -35%) scale(1.05); }
-}
-
-/* Reduced-motion: freeze blobs in their start positions */
+/* Reduced-motion: stay coral, no animation */
 @media (prefers-reduced-motion: reduce) {
-  .gt-blob { animation: none; }
+  .inline-highlight {
+    animation: none;
+    color: var(--accent);
+  }
 }
 
 /* ============================================================
