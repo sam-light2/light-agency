@@ -338,72 +338,114 @@ body::before {
 }
 .link:hover { color: var(--accent-glow); }
 
-/* ---------- Marquee ---------- */
-.hero__marquee {
+/* ---------- Coverflow Carousel ---------- */
+.carousel {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);  /* break out of padding */
-  margin-top: auto;               /* push to bottom of flex hero */
-  padding: 36px 0 24px;
-  overflow: hidden;
-  -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
-          mask-image:
-    linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  width: 100%;
+  max-width: 1100px;
+  height: clamp(340px, 48vh, 460px);
+  margin: 32px auto 0;
+  padding: 0 16px;
 }
 
-.hero__marquee-track {
-  display: flex;
-  gap: 24px;
-  width: max-content;
-  padding: 28px 16px;
-  animation: marqueeSlide 38s linear infinite;
-  will-change: transform;
-}
-.hero__marquee:hover .hero__marquee-track {
-  animation-play-state: paused;
+.carousel__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
-@keyframes marqueeSlide {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
-
-.hero__marquee-tile {
-  flex: 0 0 auto;
-  width: clamp(120px, 14vw, 180px);
+.carousel__card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(180px, 22vw, 250px);
   aspect-ratio: 9 / 16;
-  border-radius: 18px;
+  max-height: 100%;
+  border-radius: 22px;
+  border: 2px solid rgba(24, 22, 15, 0.1);
   overflow: hidden;
-  background: #111;
+  background: #000;
   box-shadow:
-    0 12px 28px rgba(24, 22, 15, 0.18),
-    0 4px 8px   rgba(24, 22, 15, 0.10);
-  transition: transform 0.35s var(--ease);
+    0 28px 56px rgba(24, 22, 15, 0.28),
+    0 10px 20px rgba(24, 22, 15, 0.14);
+  transform-origin: center center;
+  transform:
+    translate(-50%, -50%)
+    translateX(var(--cf-x, 0%))
+    scale(var(--cf-scale, 1))
+    rotateY(var(--cf-rot, 0deg));
+  opacity: var(--cf-opacity, 1);
+  z-index: var(--cf-z, 1);
+  filter: blur(var(--cf-blur, 0px));
+  visibility: var(--cf-vis, visible);
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease,
+    filter 0.5s ease;
+  will-change: transform, opacity, filter;
 }
-.hero__marquee-tile video {
+.carousel__card video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-/* Hand-laid alternating tilt — using nth-child on the doubled list */
-.hero__marquee-tile:nth-child(odd)  { transform: rotate(-2.5deg) translateY(-4px); }
-.hero__marquee-tile:nth-child(even) { transform: rotate(3.5deg)  translateY( 8px); }
-.hero__marquee-tile:nth-child(5n)   { transform: rotate(-4deg)   translateY(-2px); }
-.hero__marquee-tile:hover {
-  transform: rotate(0) translateY(0) scale(1.05);
-  z-index: 2;
+
+/* Center card gets a subtle accent ring on focus/hover */
+.carousel__card[data-pos="0"] {
+  border-color: rgba(229, 74, 46, 0.45);
+  box-shadow:
+    0 30px 60px rgba(24, 22, 15, 0.32),
+    0 12px 24px rgba(24, 22, 15, 0.16),
+    0 0 0 3px rgba(229, 74, 46, 0.08);
 }
+
+/* Prev / next buttons */
+.carousel__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 6px 14px rgba(24, 22, 15, 0.12);
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.carousel__nav:hover {
+  transform: translateY(-50%) scale(1.06);
+  background: var(--cream);
+  color: var(--accent);
+}
+.carousel__nav:active { transform: translateY(-50%) scale(0.96); }
+.carousel__nav svg { width: 18px; height: 18px; }
+.carousel__nav--prev { left: 8px; }
+.carousel__nav--next { right: 8px; }
 
 @media (max-width: 900px) {
   .hero { padding-top: 100px; }
   .hero__center { gap: 18px; }
-  .hero__marquee-track { animation-duration: 28s; }
+  .carousel { margin-top: 24px; }
+  .carousel__card { width: clamp(150px, 32vw, 200px); border-radius: 18px; }
 }
 
 @media (max-width: 600px) {
-  .hero__marquee-tile { width: clamp(96px, 28vw, 130px); border-radius: 14px; }
+  .carousel { height: clamp(280px, 56vh, 380px); }
+  .carousel__card { width: clamp(130px, 42vw, 170px); border-radius: 16px; }
+  .carousel__nav { width: 38px; height: 38px; }
+  .carousel__nav svg { width: 16px; height: 16px; }
 }
 
 /* Hide the now-unused hero photo layers if any markup still references them */
@@ -1461,7 +1503,7 @@ body::before {
    Rounded corners, soft border, slow staggered fade-in
    ============================================================ */
 .work__visual {
-  border-radius: 14px;
+  border-radius: 6px;
   border: 1px solid var(--rule);
   background: var(--cream-warm);
   box-shadow: 0 1px 2px rgba(24, 22, 15, 0.04);
@@ -1479,6 +1521,135 @@ body::before {
 .work__visual .work__video {
   border-radius: inherit;
 }
+
+/* ============================================================
+   STATS — dot-card row showing video performance
+   ============================================================ */
+.stats {
+  padding: 100px var(--pad-x) 60px;
+  background: var(--cream);
+}
+.stats__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.stats .section-num {
+  display: block;
+  margin-bottom: 28px;
+  color: var(--ink-mute);
+}
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 900px) {
+  .stats { padding: 70px var(--pad-x) 40px; }
+  .stats__grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stats__grid > :last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .stats__grid { grid-template-columns: 1fr; }
+  .stats__grid > :last-child { grid-column: auto; }
+}
+
+/* ---------- dot-card (orbiting dot around a stat tile) ---------- */
+.dot-card {
+  position: relative;
+  padding: 6px;       /* room for orbiting dot outside the card */
+  isolation: isolate;
+}
+
+/* The orbiting dot — moves around the outer perimeter */
+.dot-card__dot {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 12px rgba(229, 74, 46, 0.85),
+    0 0 22px rgba(229, 74, 46, 0.5);
+  z-index: 2;
+  animation: dotOrbit 8s ease-in-out infinite;
+  animation-delay: var(--dot-delay, 0s);
+}
+
+@keyframes dotOrbit {
+  0%, 100% { top: 10%;                   right: 10%; }
+  25%      { top: 10%;                   right: calc(100% - 35px); }
+  50%      { top: calc(100% - 30px);     right: calc(100% - 35px); }
+  75%      { top: calc(100% - 30px);     right: 10%; }
+}
+
+/* The card itself */
+.dot-card__card {
+  position: relative;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 18px;
+  padding: 36px 28px 28px;
+  min-height: 180px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 36px rgba(24, 22, 15, 0.16),
+    0 4px 8px   rgba(24, 22, 15, 0.10),
+    inset 0 0 0 1px rgba(242, 237, 227, 0.06);
+}
+
+/* Soft inner radial glow */
+.dot-card__ray {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 70% 20%, rgba(229, 74, 46, 0.22), transparent 65%),
+    radial-gradient(50% 40% at 20% 90%, rgba(255, 140, 90, 0.12), transparent 65%);
+  z-index: 0;
+}
+
+/* Big counter value */
+.dot-card__value {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 5.5vw, 72px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'opsz' 144;
+  color: var(--cream);
+  font-variant-numeric: tabular-nums;
+}
+
+.dot-card__label {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 227, 0.65);
+}
+
+/* Edge lines — subtle gradients on each side that hint at the dot's path */
+.dot-card__line {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(var(--line-dir, 90deg),
+    transparent 0%,
+    rgba(229, 74, 46, 0.55) 50%,
+    transparent 100%);
+  opacity: 0.5;
+  z-index: 1;
+}
+.dot-card__line--top    { top: 0; left: 10%; right: 10%; height: 1px; --line-dir: 90deg; }
+.dot-card__line--bottom { bottom: 0; left: 10%; right: 10%; height: 1px; --line-dir: 90deg; }
+.dot-card__line--left   { left: 0; top: 15%; bottom: 15%; width: 1px; --line-dir: 180deg; }
+.dot-card__line--right  { right: 0; top: 15%; bottom: 15%; width: 1px; --line-dir: 180deg; }
 
 /* Slow, staggered gallery fade — first item in each column fades in,
    then the second item in each column follows. The columns themselves

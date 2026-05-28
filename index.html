@@ -41,7 +41,7 @@
   </header>
 
   <!-- ====================== HERO ====================== -->
-  <section id="top" class="hero hero--marquee">
+  <section id="top" class="hero hero--carousel">
     <!-- Soft warm wash behind the centered stack -->
     <div class="hero__wash" aria-hidden="true"></div>
 
@@ -60,23 +60,68 @@
       </a>
     </div>
 
-    <!-- Looping marquee of work videos along the bottom -->
-    <div class="hero__marquee" aria-hidden="true">
-      <div class="hero__marquee-track">
-        <!-- First copy -->
-        <div class="hero__marquee-tile"><video src="Texas%20Football%20Fein.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="PostGame.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Texas%20Football%2067.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Texas%20Football%20SEC.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Sunset.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Texas%20Football%20Reel.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <!-- Second copy (for seamless loop) -->
-        <div class="hero__marquee-tile"><video src="Texas%20Football%20Fein.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="PostGame.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Texas%20Football%2067.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Texas%20Football%20SEC.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Sunset.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
-        <div class="hero__marquee-tile"><video src="Texas%20Football%20Reel.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
+    <!-- Coverflow carousel of work videos -->
+    <div class="carousel" data-carousel>
+      <div class="carousel__stage">
+        <div class="carousel__card" data-card><video src="Texas%20Football%20Fein.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
+        <div class="carousel__card" data-card><video src="PostGame.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
+        <div class="carousel__card" data-card><video src="Texas%20Football%2067.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
+        <div class="carousel__card" data-card><video src="Sunset.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
+        <div class="carousel__card" data-card><video src="Texas%20Football%20Reel.mp4" muted autoplay loop playsinline preload="metadata"></video></div>
+      </div>
+
+      <button class="carousel__nav carousel__nav--prev" data-carousel-prev aria-label="Previous">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="carousel__nav carousel__nav--next" data-carousel-next aria-label="Next">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ====================== STATS ====================== -->
+  <section class="stats" aria-label="Video performance">
+    <div class="stats__inner">
+      <span class="section-num reveal">— By the numbers</span>
+      <div class="stats__grid">
+        <div class="dot-card reveal" data-dot-card data-count="50000000" data-format="impressions">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Impressions</div>
+          </div>
+        </div>
+
+        <div class="dot-card reveal" data-dot-card data-count="2100000" data-format="short" style="--dot-delay: -2s">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Likes</div>
+          </div>
+        </div>
+
+        <div class="dot-card reveal" data-dot-card data-count="777000" data-format="short" style="--dot-delay: -4s">
+          <span class="dot-card__dot" aria-hidden="true"></span>
+          <div class="dot-card__card">
+            <span class="dot-card__ray" aria-hidden="true"></span>
+            <span class="dot-card__line dot-card__line--top"></span>
+            <span class="dot-card__line dot-card__line--right"></span>
+            <span class="dot-card__line dot-card__line--bottom"></span>
+            <span class="dot-card__line dot-card__line--left"></span>
+            <div class="dot-card__value" data-dot-value>0</div>
+            <div class="dot-card__label">Views</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -142,7 +187,7 @@
         <h2 class="about__name reveal">Sam <em class="gradient-text">Light.</em></h2>
         <p class="about__role reveal">Videographer &amp; Content Developer</p>
 
-        <p class="about__bio-lead reveal" data-whisper>A digital strategist and storyteller based between Austin and Dallas.</p>
+        <p class="about__bio-lead reveal">A digital strategist and storyteller based between Austin and Dallas.</p>
 
         <dl class="about__specs reveal">
           <div class="about__spec">
@@ -178,17 +223,17 @@
       <div class="approach__col">
         <span class="approach__num">i.</span>
         <h3 data-whisper>Story first, frame second.</h3>
-        <p data-whisper>It's not just about looking good. It's about making sure your message actually connects with the right people.</p>
+        <p>It's not just about looking good. It's about making sure your message actually connects with the right people.</p>
       </div>
       <div class="approach__col">
         <span class="approach__num">ii.</span>
         <h3 data-whisper>Details shape the brand.</h3>
-        <p data-whisper>Lighting, pacing, and sound do the heavy lifting. They create the exact vibe you want your audience to feel.</p>
+        <p>Lighting, pacing, and sound do the heavy lifting. They create the exact vibe you want your audience to feel.</p>
       </div>
       <div class="approach__col">
         <span class="approach__num">iii.</span>
         <h3 data-whisper>Format shapes the story.</h3>
-        <p data-whisper>What works on a big screen flops on a feed. I shoot and cut specifically for where your audience will watch it.</p>
+        <p>What works on a big screen flops on a feed. I shoot and cut specifically for where your audience will watch it.</p>
       </div>
     </div>
   </section>
