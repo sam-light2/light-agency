@@ -48,6 +48,17 @@
       v.setAttribute('muted', '');
       v.setAttribute('playsinline', '');
       v.setAttribute('webkit-playsinline', '');
+      // `preload="metadata"` only fetches duration/dimensions — mobile then
+      // paints a black rectangle until playback starts. `auto` pulls enough
+      // data to render the first frame, so the clip is visible immediately.
+      v.preload = 'auto';
+      // Force the decoder to surface a poster frame even if autoplay is
+      // blocked (Low Power Mode / data-saver), so it never looks empty.
+      v.addEventListener('loadeddata', () => {
+        if (v.paused && v.currentTime === 0) {
+          try { v.currentTime = 0.05; } catch (_) {}
+        }
+      }, { once: true });
     });
 
     const tryPlay = (v) => {
@@ -55,20 +66,44 @@
       if (p && typeof p.catch === 'function') p.catch(() => {});
     };
 
+    // Videos currently on-screen — a later user gesture retries these.
+    const onScreen = new Set();
+
     if ('IntersectionObserver' in window) {
       const videoIO = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) tryPlay(entry.target);
-            else entry.target.pause();
+            if (entry.isIntersecting) {
+              onScreen.add(entry.target);
+              tryPlay(entry.target);
+            } else {
+              onScreen.delete(entry.target);
+              entry.target.pause();
+            }
           });
         },
-        { threshold: 0.25 }
+        // Low threshold + margin so tall 9:16 clips (taller than a phone
+        // viewport) reliably trigger and start a touch before they enter.
+        { threshold: 0.01, rootMargin: '0px 0px 12% 0px' }
       );
       workVideos.forEach((v) => videoIO.observe(v));
     } else {
       workVideos.forEach(tryPlay);
     }
+
+    // Mobile browsers gate muted autoplay behind a user gesture. The first
+    // tap/scroll satisfies that, so retry the on-screen clips (or all of
+    // them) once, then detach the listeners.
+    const unlock = () => {
+      const targets = onScreen.size ? onScreen : new Set(workVideos);
+      targets.forEach(tryPlay);
+      window.removeEventListener('touchstart', unlock);
+      window.removeEventListener('pointerdown', unlock);
+      window.removeEventListener('scroll', unlock);
+    };
+    window.addEventListener('touchstart', unlock, { passive: true });
+    window.addEventListener('pointerdown', unlock, { passive: true });
+    window.addEventListener('scroll', unlock, { passive: true });
   }
 
   /* --------------------------------------------------------

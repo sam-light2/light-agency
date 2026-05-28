@@ -1092,6 +1092,8 @@ body::before {
   }
   .about__spec dt { font-size: 9.5px; letter-spacing: 0.1em; }
   .about__spec dd { font-size: 13.5px; line-height: 1.35; }
+  /* Smaller portrait on phones */
+  .about__portrait { max-width: 240px; }
 }
 
 /* ============================================================
@@ -1696,8 +1698,17 @@ body::before {
   .stats__grid > :last-child { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
-  .stats__grid { grid-template-columns: 1fr; }
+  .stats__grid { grid-template-columns: 1fr; gap: 12px; }
   .stats__grid > :last-child { grid-column: auto; }
+  /* Compact dot-cards on phones */
+  .dot-card__card {
+    padding: 22px 22px 20px;
+    min-height: 124px;
+    border-radius: 16px;
+  }
+  .dot-card__value { font-size: 40px; }
+  .dot-card__label { font-size: 10px; margin-top: 8px; }
+  .dot-card__dot { width: 8px; height: 8px; }
 }
 
 /* ---------- dot-card (orbiting dot around a stat tile) ---------- */
