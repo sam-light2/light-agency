@@ -500,6 +500,9 @@ body::before {
 .section-head--work {
   position: relative;
 }
+.work .section-head h2 {
+  font-size: clamp(38px, 6.5vw, 96px);
+}
 .work-meta {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -932,6 +935,7 @@ body::before {
   position: relative;
   isolation: isolate;
   align-self: center;
+  transform: translate(-40px, 48px);
   /* Layered drop-shadow for editorial depth */
   filter:
     drop-shadow(0 22px 40px rgba(24, 22, 15, 0.22))
@@ -1098,59 +1102,6 @@ body::before {
   .about__spec dd { font-size: 13.5px; line-height: 1.35; }
   /* Smaller portrait on phones */
   .about__portrait { max-width: 240px; }
-}
-
-/* ============================================================
-   SERVICES — brief capability strip between Approach and Contact
-   ============================================================ */
-.services {
-  background: var(--cream);
-  padding: 100px var(--pad-x);
-}
-.services__inner {
-  max-width: 1140px;
-  margin: 0 auto;
-}
-.services__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 40px;
-}
-.services__list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 48px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  border-top: 1px solid var(--rule);
-}
-.services__item {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 4.5vw, 60px);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  font-variation-settings: 'opsz' 144;
-  color: var(--ink);
-  line-height: 1.15;
-  width: 100%;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--rule);
-  transition: color 0.25s var(--ease);
-}
-.services__item:hover { color: var(--accent); }
-.services__note {
-  font-size: 14px;
-  color: var(--ink-mute);
-  letter-spacing: 0.01em;
-}
-
-@media (max-width: 600px) {
-  .services { padding: 70px var(--pad-x); }
-  .services__item { font-size: clamp(26px, 8vw, 40px); padding: 16px 0; }
 }
 
 /* ============================================================
