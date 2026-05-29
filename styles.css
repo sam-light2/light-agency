@@ -225,18 +225,29 @@ body::before {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: var(--ink) url('sequence2.JPG') center 20% / cover no-repeat;
+  background: var(--ink);
   color: var(--cream);
 }
 
-/* Dark cinematic scrim — directional wash + a focused radial pool behind
-   the centered text so the headline separates from the photo while the
-   edges still read as a real image (keeps the cinematic depth). */
+/* Photo layer — sits behind the scrim. Extended with inset so the
+   zoom-out scale + slight tilt never reveal the ink background at edges. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  z-index: 0;
+  background: url('sequence2.JPG') 58% 22% / cover no-repeat;
+  transform: scale(0.88) rotate(1.5deg);
+  transform-origin: 58% 22%;
+  pointer-events: none;
+}
+
+/* Dark cinematic scrim — sits above the photo, below the text. */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   background:
     radial-gradient(
       ellipse 78% 62% at 50% 48%,
@@ -256,7 +267,7 @@ body::before {
 /* Centered text column */
 .hero__overlay {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -733,7 +744,7 @@ body::before {
   background: var(--ink);
   color: var(--cream);
   padding: 160px 0;
-  margin: 60px 0;
+  margin: 60px 0 0;
   position: relative;
   overflow: hidden;
 }
@@ -1106,7 +1117,7 @@ body::before {
    CONTACT
    ============================================================ */
 .contact {
-  padding: 160px var(--pad-x) 50px;
+  padding: 90px var(--pad-x) 50px;
   background: var(--cream-warm);
   position: relative;
   overflow: hidden;
