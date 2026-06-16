@@ -121,7 +121,7 @@ body::before {
   color: var(--cream);
 }
 .nav__logo {
-  width: 30px;
+  width: 42px;
   height: auto;
   display: block;
   flex-shrink: 0;
@@ -130,9 +130,9 @@ body::before {
 .nav__brand-name {
   display: inline-flex;
   align-items: baseline;
-  gap: 9px;
+  gap: 11px;
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 34px;
   font-weight: 600;
   letter-spacing: -0.01em;
   font-variation-settings: 'opsz' 14;
@@ -140,9 +140,9 @@ body::before {
 }
 .nav__brand-sub {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0.78;
   transform: translateY(-2px);
@@ -190,9 +190,9 @@ body::before {
     padding: 16px var(--pad-x);
   }
   .nav__brand { gap: 9px; }
-  .nav__logo { width: 22px; }
-  .nav__brand-name { font-size: 18px; gap: 7px; }
-  .nav__brand-sub { font-size: 9px; letter-spacing: 0.16em; }
+  .nav__logo { width: 28px; }
+  .nav__brand-name { font-size: 22px; gap: 8px; }
+  .nav__brand-sub { font-size: 10px; letter-spacing: 0.16em; }
   .nav__menu {
     gap: 18px;
     font-size: 10px;
@@ -201,8 +201,8 @@ body::before {
 }
 
 @media (max-width: 460px) {
-  .nav__logo { width: 19px; }
-  .nav__brand-name { font-size: 15px; }
+  .nav__logo { width: 24px; }
+  .nav__brand-name { font-size: 18px; }
   .nav__brand-sub { display: none; }
   .nav__menu { gap: 14px; font-size: 9px; }
 }
