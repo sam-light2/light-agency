@@ -1,13 +1,12 @@
 /* ============================================================
    Light Agency
    Aesthetic: editorial, warm, modern
-   Type: Fraunces (display) · Instrument Sans (body) · JetBrains Mono (labels)
-   Palette: warm cream + ink + toned-down terracotta accent
-   (metallic silver arrow logo mark provides the cool brand accent)
+   Type: Playfair Display (display) · Instrument Sans (body) · JetBrains Mono (labels)
+   Palette: warm cream + ink + deep pine-green accent (sage on dark)
    ============================================================ */
 
 :root {
-  /* Color — warm cream + ink + a toned-down terracotta accent */
+  /* Color — warm cream + ink + deep pine-green accent (sage on dark) */
   --cream: #F2EDE3;
   --cream-warm: #ECE6D8;
   --cream-deep: #E0D8C5;
@@ -15,12 +14,12 @@
   --ink-soft: #3A352B;
   --ink-mute: #8A8377;
   --rule: #D9D2C2;
-  --accent: #D75E3C;      /* softer burnt-orange (toned down from #E54A2E) */
-  --accent-deep: #B5482B;
-  --accent-glow: #F2A074;
+  --accent: #3E6A5C;      /* deep pine green — refined editorial accent */
+  --accent-deep: #2B4D43;
+  --accent-glow: #84A899; /* soft sage — for highlights & accents on dark */
 
   /* Type */
-  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
   --font-body: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
@@ -120,33 +119,36 @@ body::before {
   text-decoration: none;
   color: var(--cream);
 }
-.nav__logo {
-  width: 42px;
-  height: auto;
-  display: block;
-  flex-shrink: 0;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+.nav__wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1;
 }
-.nav__brand-name {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 11px;
-  font-family: var(--font-display);
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  font-variation-settings: 'opsz' 14;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
-}
-.nav__brand-sub {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+.nav__wordmark-name {
+  font-family: var(--font-body);
+  font-size: 30px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  opacity: 0.78;
-  transform: translateY(-2px);
+  color: var(--cream);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+  transition: color 0.3s var(--ease), text-shadow 0.3s var(--ease);
 }
+.nav__wordmark-sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.6;
+  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.nav__brand:hover .nav__wordmark-name { text-shadow: 0 1px 18px rgba(0, 0, 0, 0.6); }
+.nav__brand:hover .nav__wordmark-sub { opacity: 0.9; }
 
 .nav__menu {
   display: flex;
@@ -180,8 +182,12 @@ body::before {
   color: var(--ink);
   text-shadow: none;
 }
-.nav--dark .nav__brand-name { text-shadow: none; }
-.nav--dark .nav__logo { filter: none; }
+.nav--dark .nav__wordmark-name,
+.nav--dark .nav__wordmark-sub {
+  color: var(--ink);
+  text-shadow: none;
+}
+.nav--dark .nav__wordmark-sub { opacity: 0.5; }
 .nav--dark .nav__menu a:hover { color: var(--accent); }
 .nav--dark .nav__cta { color: var(--accent) !important; }
 
@@ -189,10 +195,7 @@ body::before {
   .nav {
     padding: 16px var(--pad-x);
   }
-  .nav__brand { gap: 9px; }
-  .nav__logo { width: 28px; }
-  .nav__brand-name { font-size: 22px; gap: 8px; }
-  .nav__brand-sub { font-size: 10px; letter-spacing: 0.16em; }
+  .nav__wordmark-name { font-size: 26px; }
   .nav__menu {
     gap: 18px;
     font-size: 10px;
@@ -201,9 +204,7 @@ body::before {
 }
 
 @media (max-width: 460px) {
-  .nav__logo { width: 24px; }
-  .nav__brand-name { font-size: 18px; }
-  .nav__brand-sub { display: none; }
+  .nav__wordmark-name { font-size: 22px; }
   .nav__menu { gap: 14px; font-size: 9px; }
 }
 
@@ -220,7 +221,7 @@ body::before {
 .section-num {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-mute);
   display: block;
@@ -228,15 +229,14 @@ body::before {
 
 .section-head h2 {
   font-family: var(--font-display);
-  font-size: clamp(48px, 9vw, 130px);
-  font-weight: 300;
-  letter-spacing: -0.035em;
-  line-height: 0.92;
-  font-variation-settings: 'opsz' 144;
+  font-size: clamp(40px, 6vw, 88px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
 }
 .section-head h2 em {
   font-style: italic;
-  font-variation-settings: 'opsz' 144, 'wght' 300;
+  font-weight: 400;
   color: var(--accent);
 }
 
@@ -309,11 +309,10 @@ body::before {
 /* Big editorial display title — cream on photo, italic coral accents */
 .hero__title {
   font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(56px, 10vw, 148px);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  font-variation-settings: 'opsz' 144;
+  font-weight: 400;
+  font-size: clamp(36px, 5.6vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
   color: var(--cream);
   margin: 0;
   /* Soft shadow lifts the serif off the busy photo without a visible box */
@@ -328,7 +327,7 @@ body::before {
 .hero__title em {
   font-style: italic;
   color: var(--cream); /* base; inline-highlight animates to coral */
-  font-variation-settings: 'opsz' 144, 'wght' 300;
+  font-weight: 400;
 }
 
 /* Force each title line onto a single visual line at wide viewports only */
@@ -373,8 +372,8 @@ body::before {
   letter-spacing: 0.005em;
   cursor: pointer;
   box-shadow:
-    0 12px 28px rgba(215, 94, 60, 0.28),
-    0 3px 6px   rgba(215, 94, 60, 0.18),
+    0 12px 28px rgba(62, 106, 92, 0.28),
+    0 3px 6px   rgba(62, 106, 92, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
   transition:
     background 0.3s var(--ease),
@@ -385,8 +384,8 @@ body::before {
   background: var(--accent-deep);
   transform: translateY(-2px);
   box-shadow:
-    0 16px 32px rgba(215, 94, 60, 0.36),
-    0 5px 10px  rgba(215, 94, 60, 0.22),
+    0 16px 32px rgba(62, 106, 92, 0.36),
+    0 5px 10px  rgba(62, 106, 92, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.26);
 }
 .hero__cta--solid:active { transform: translateY(0); }
@@ -403,7 +402,7 @@ body::before {
   letter-spacing: 0.005em;
   color: var(--ink-mute);
   margin: 4px 0 0;
-  font-variation-settings: 'opsz' 144, 'wght' 400;
+  font-weight: 400;
 }
 
 /* Scroll cue anchored to the bottom of the hero */
@@ -484,7 +483,7 @@ body::before {
 .work {
   /* Reduced top padding because stats section now sits directly above
      and already provides ~80px of buffer at its bottom. */
-  padding: 100px 0 60px;
+  padding: 140px 0 60px;
   position: relative;
 }
 
@@ -530,9 +529,6 @@ body::before {
 .section-head--work {
   position: relative;
 }
-.work .section-head h2 {
-  font-size: clamp(38px, 6.5vw, 96px);
-}
 .work-meta {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -576,7 +572,6 @@ body::before {
   font-size: 30px;
   font-weight: 400;
   letter-spacing: -0.02em;
-  font-variation-settings: 'opsz' 144;
   line-height: 1.05;
   margin-bottom: 6px;
 }
@@ -608,7 +603,7 @@ body::before {
 /* Color variants — subtle gradient placeholders that look like film stills */
 .work__visual[data-color="orange"] .work__placeholder {
   background:
-    radial-gradient(circle at 30% 20%, rgba(242,160,116,0.4), transparent 50%),
+    radial-gradient(circle at 30% 20%, rgba(132,168,153,0.4), transparent 50%),
     linear-gradient(135deg, #3B4452 0%, #4A5568 60%, #9AA4B2 100%);
 }
 .work__visual[data-color="orange-deep"] .work__placeholder {
@@ -618,7 +613,7 @@ body::before {
 }
 .work__visual[data-color="cream"] .work__placeholder {
   background:
-    radial-gradient(circle at 25% 35%, rgba(215,94,60,0.15), transparent 55%),
+    radial-gradient(circle at 25% 35%, rgba(62,106,92,0.15), transparent 55%),
     linear-gradient(140deg, #DADCE1 0%, #AEB5C0 100%);
 }
 .work__visual[data-color="cream-warm"] .work__placeholder {
@@ -628,7 +623,7 @@ body::before {
 }
 .work__visual[data-color="ink"] .work__placeholder {
   background:
-    radial-gradient(circle at 20% 80%, rgba(215,94,60,0.25), transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(62,106,92,0.25), transparent 55%),
     linear-gradient(135deg, #14161B 0%, #2E323A 100%);
 }
 
@@ -675,7 +670,6 @@ body::before {
   opacity: 0;
   transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
   z-index: 2;
-  font-variation-settings: 'opsz' 144;
   white-space: nowrap;
 }
 .work__item:hover .work__hover {
@@ -706,7 +700,6 @@ body::before {
   font-size: 30px;
   font-weight: 400;
   letter-spacing: -0.02em;
-  font-variation-settings: 'opsz' 144;
   grid-row: 1;
   line-height: 1.05;
 }
@@ -733,7 +726,6 @@ body::before {
   font-style: italic;
   font-size: 28px;
   text-decoration: none;
-  font-variation-settings: 'opsz' 144;
   transition: color 0.3s var(--ease);
 }
 .work__more:hover { color: var(--accent); }
@@ -778,7 +770,6 @@ body::before {
   font-size: 24vw;
   font-style: italic;
   font-weight: 300;
-  font-variation-settings: 'opsz' 144;
   color: rgba(242, 237, 227, 0.04);
   pointer-events: none;
   letter-spacing: -0.04em;
@@ -807,20 +798,18 @@ body::before {
 .approach__num {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 36px;
-  color: var(--accent);
+  font-size: 34px;
+  color: var(--accent-glow);
   display: block;
   margin-bottom: 28px;
-  font-variation-settings: 'opsz' 144;
 }
 .approach__col h3 {
   font-family: var(--font-display);
-  font-size: clamp(28px, 2.6vw, 36px);
+  font-size: clamp(25px, 2.3vw, 32px);
   font-weight: 400;
   letter-spacing: -0.025em;
   margin-bottom: 18px;
   line-height: 1.05;
-  font-variation-settings: 'opsz' 144;
 }
 .approach__col p {
   color: rgba(242, 237, 227, 0.72);
@@ -877,7 +866,6 @@ body::before {
   letter-spacing: -0.025em;
   line-height: 1.05;
   margin-bottom: 28px;
-  font-variation-settings: 'opsz' 144;
 }
 .study__body h3 em {
   font-style: italic;
@@ -895,7 +883,6 @@ body::before {
   font-family: var(--font-display);
   font-style: italic;
   color: var(--ink);
-  font-variation-settings: 'opsz' 14;
 }
 
 .study__results {
@@ -920,7 +907,6 @@ body::before {
   color: var(--ink);
   letter-spacing: -0.02em;
   margin-bottom: 8px;
-  font-variation-settings: 'opsz' 144;
 }
 
 @media (max-width: 900px) {
@@ -976,7 +962,7 @@ body::before {
 .about__portrait:hover {
   filter:
     drop-shadow(0 28px 48px rgba(24, 22, 15, 0.28))
-    drop-shadow(0 10px 18px rgba(215, 94, 60, 0.16))
+    drop-shadow(0 10px 18px rgba(62, 106, 92, 0.16))
     drop-shadow(0 2px 4px   rgba(24, 22, 15, 0.10));
   transform: translateY(-2px);
 }
@@ -1009,8 +995,8 @@ body::before {
 .about__portrait figcaption {
   margin-top: 18px;
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-mute);
   display: flex;
@@ -1032,17 +1018,16 @@ body::before {
 
 .about__name {
   font-family: var(--font-display);
-  font-size: clamp(56px, 7.8vw, 116px);
-  font-weight: 300;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  font-variation-settings: 'opsz' 144;
+  font-size: clamp(40px, 6vw, 88px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   margin-bottom: 24px;
 }
 .about__name em {
   font-style: italic;
   color: var(--accent);
-  font-variation-settings: 'opsz' 144, 'wght' 300;
+  font-weight: 400;
   display: inline-block;
 }
 
@@ -1061,11 +1046,10 @@ body::before {
 /* Lead line: large display serif (kept) */
 .about__bio-lead {
   font-family: var(--font-display);
-  font-size: clamp(24px, 2.1vw, 34px);
-  font-weight: 300;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  font-variation-settings: 'opsz' 144;
+  font-size: clamp(25px, 2.3vw, 32px);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: -0.015em;
   color: var(--ink);
   max-width: 540px;
   margin-bottom: 48px;
@@ -1157,12 +1141,11 @@ body::before {
 
 .contact__heading {
   font-family: var(--font-display);
-  font-size: clamp(60px, 11vw, 160px);
-  font-weight: 300;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
+  font-size: clamp(44px, 6.6vw, 96px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
   margin: 0 0 60px;
-  font-variation-settings: 'opsz' 144;
 }
 .contact__heading em {
   font-style: italic;
@@ -1179,7 +1162,6 @@ body::before {
   border-bottom: 2px solid var(--ink);
   padding-bottom: 6px;
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
-  font-variation-settings: 'opsz' 144;
 }
 .contact__email:hover {
   color: var(--accent);
@@ -1195,8 +1177,8 @@ body::before {
 }
 .contact__links a {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: none;
@@ -1218,7 +1200,7 @@ body::before {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--ink-mute);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 .footer > span:first-child { text-align: left; }
 .footer > span:last-child { text-align: right; }
@@ -1340,7 +1322,7 @@ body::before {
   position: relative;
   display: inline-block;
   font-style: italic;
-  font-variation-settings: 'opsz' 144, 'wght' 300;
+  font-weight: 400;
   /* Extend the paint box past italic glyph overhang so background-clip: text
      doesn't slice ascenders/descenders. Negative margin keeps layout neutral. */
   padding: 0.22em 0.12em 0.18em;
@@ -1353,7 +1335,7 @@ body::before {
       var(--accent-deep) 0%,
       var(--accent) 22%,
       var(--accent-glow) 42%,
-      #FFCBA0 58%,
+      #C9DDD3 58%,
       var(--accent-glow) 74%,
       var(--accent) 90%,
       var(--accent-deep) 100%
@@ -1375,8 +1357,8 @@ body::before {
   inset: -10% -6%;
   z-index: -1;
   background:
-    radial-gradient(40% 70% at 20% 50%, rgba(242, 160, 116, 0.32), transparent 70%),
-    radial-gradient(40% 70% at 80% 50%, rgba(215, 94, 60, 0.26), transparent 70%);
+    radial-gradient(40% 70% at 20% 50%, rgba(132, 168, 153, 0.32), transparent 70%),
+    radial-gradient(40% 70% at 80% 50%, rgba(62, 106, 92, 0.26), transparent 70%);
   filter: blur(14px);
   opacity: 0.55;
   pointer-events: none;
@@ -1390,7 +1372,7 @@ body::before {
       100deg,
       var(--accent) 0%,
       var(--accent-glow) 28%,
-      #FFD9B6 50%,
+      #D8E7DF 50%,
       var(--accent-glow) 72%,
       var(--accent) 100%
     );
@@ -1402,8 +1384,8 @@ body::before {
 }
 .gradient-text--on-dark::before {
   background:
-    radial-gradient(40% 70% at 20% 50%, rgba(255, 210, 160, 0.35), transparent 70%),
-    radial-gradient(40% 70% at 80% 50%, rgba(215, 94, 60, 0.32), transparent 70%);
+    radial-gradient(40% 70% at 20% 50%, rgba(201, 221, 211, 0.35), transparent 70%),
+    radial-gradient(40% 70% at 80% 50%, rgba(62, 106, 92, 0.32), transparent 70%);
 }
 
 @keyframes gradientShift {
@@ -1444,7 +1426,7 @@ body::before {
   position: relative;
   display: inline-block;
   font-style: italic;
-  font-variation-settings: 'opsz' 144, 'wght' 300;
+  font-weight: 400;
   line-height: inherit;
   /* Extend the paint box past italic glyph overhang so background-clip:text
      doesn't slice ascenders/descenders. Negative margin keeps layout neutral. */
@@ -1457,7 +1439,7 @@ body::before {
       var(--accent-deep) 0%,
       var(--accent) 22%,
       var(--accent-glow) 42%,
-      #FFCBA0 58%,
+      #C9DDD3 58%,
       var(--accent-glow) 74%,
       var(--accent) 90%,
       var(--accent-deep) 100%
@@ -1544,7 +1526,7 @@ body::before {
   filter: url(#liquid-glass);
   background:
     radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.45), transparent 60%),
-    radial-gradient(120% 80% at 80% 100%, rgba(215, 94, 60, 0.10), transparent 60%);
+    radial-gradient(120% 80% at 80% 100%, rgba(62, 106, 92, 0.10), transparent 60%);
   opacity: 0.7;
   mix-blend-mode: screen;
 }
@@ -1626,7 +1608,16 @@ body::before {
   padding: 13px 26px;
   border-radius: 100px;
   background: transparent;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact__email .liquid-btn__label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.88em;
+  letter-spacing: 0.01em;
+  text-align: center;
 }
 .contact__email.liquid-btn--pill:hover {
   color: var(--accent);
@@ -1690,7 +1681,7 @@ body::before {
   box-shadow:
     0 18px 36px rgba(24, 22, 15, 0.16),
     0 4px 8px   rgba(24, 22, 15, 0.10);
-  border-color: rgba(215, 94, 60, 0.35);
+  border-color: rgba(62, 106, 92, 0.35);
 }
 
 /* Ensure the bare <video> inside a tile inherits the rounded corners */
@@ -1758,6 +1749,8 @@ body::before {
   position: relative;
   padding: 6px;       /* room for orbiting dot outside the card */
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
 }
 
 /* The orbiting dot — moves around the outer perimeter */
@@ -1768,10 +1761,10 @@ body::before {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--accent-glow);
   box-shadow:
-    0 0 12px rgba(215, 94, 60, 0.85),
-    0 0 22px rgba(215, 94, 60, 0.5);
+    0 0 12px rgba(132, 168, 153, 0.85),
+    0 0 22px rgba(132, 168, 153, 0.5);
   z-index: 2;
   animation: dotOrbit 8s ease-in-out infinite;
   animation-delay: var(--dot-delay, 0s);
@@ -1793,6 +1786,10 @@ body::before {
   padding: 36px 28px 28px;
   min-height: 180px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
   box-shadow:
     0 18px 36px rgba(24, 22, 15, 0.16),
     0 4px 8px   rgba(24, 22, 15, 0.10),
@@ -1805,8 +1802,8 @@ body::before {
   inset: -20%;
   pointer-events: none;
   background:
-    radial-gradient(60% 50% at 70% 20%, rgba(215, 94, 60, 0.22), transparent 65%),
-    radial-gradient(50% 40% at 20% 90%, rgba(242, 160, 116, 0.12), transparent 65%);
+    radial-gradient(60% 50% at 70% 20%, rgba(62, 106, 92, 0.22), transparent 65%),
+    radial-gradient(50% 40% at 20% 90%, rgba(132, 168, 153, 0.12), transparent 65%);
   z-index: 0;
 }
 
@@ -1819,7 +1816,6 @@ body::before {
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.03em;
-  font-variation-settings: 'opsz' 144;
   color: var(--cream);
   font-variant-numeric: tabular-nums;
 }
@@ -1841,7 +1837,7 @@ body::before {
   pointer-events: none;
   background: linear-gradient(var(--line-dir, 90deg),
     transparent 0%,
-    rgba(215, 94, 60, 0.55) 50%,
+    rgba(132, 168, 153, 0.55) 50%,
     transparent 100%);
   opacity: 0.5;
   z-index: 1;
@@ -1866,3 +1862,76 @@ body::before {
 .work__col:nth-child(2) .work__item.reveal:nth-child(2) { transition-delay: 0.26s; }
 .work__col:nth-child(3) .work__item.reveal:nth-child(1) { transition-delay: 0.16s; }
 .work__col:nth-child(3) .work__item.reveal:nth-child(2) { transition-delay: 0.34s; }
+
+/* ====================== LOGO CLOUD ====================== */
+.logo-cloud {
+  background: var(--cream);
+  padding: 120px 0 108px;
+}
+.logo-cloud__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  text-align: center;
+}
+.logo-cloud__heading {
+  font-family: var(--font-body);
+  font-size: clamp(20px, 3vw, 38px);
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 48px;
+}
+.logo-cloud__muted {
+  color: rgba(24, 22, 15, 0.4);
+}
+.logo-cloud__bold {
+  color: var(--ink);
+  font-weight: 600;
+}
+.logo-cloud__rule {
+  height: 1px;
+  margin: 0 auto;
+  max-width: 520px;
+  background: rgba(24, 22, 15, 0.12);
+  mask-image: linear-gradient(to right, transparent, black, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black, transparent);
+}
+.logo-cloud__mask {
+  overflow: hidden;
+  padding: 36px 0;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+.logo-cloud__track {
+  display: flex;
+  align-items: center;
+  gap: 72px;
+  width: max-content;
+  will-change: transform;
+  /* Base optical unit — each logo scales off this via --s (see below). */
+  --logo-h: 27px;
+}
+.logo-cloud__img {
+  height: calc(var(--logo-h) * var(--s, 1));
+  width: auto;
+  flex-shrink: 0;
+  filter: brightness(0);
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+/* Per-logo optical sizing — equalise visual weight across mismatched
+   marks (chunky wordmarks sized down, delicate ones up, stacked lockup
+   taller). Tuned by eye, not by raw pixel height. */
+.logo-cloud__img--lax       { --s: 0.85; }
+.logo-cloud__img--made      { --s: 1.92; }
+.logo-cloud__img--fastbreak { --s: 0.95; }
+.logo-cloud__img--dwell     { --s: 1.14; }
+.logo-cloud__img--coolam    { --s: 0.98; }
+@media (min-width: 768px) {
+  .logo-cloud__track { --logo-h: 30px; }
+}
+@media (max-width: 560px) {
+  .logo-cloud { padding: 72px 0 64px; }
+  .logo-cloud__track { gap: 52px; --logo-h: 22px; }
+}

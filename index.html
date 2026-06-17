@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Light Agency — Video & Content Strategy</title>
-  <meta name="description" content="Light Agency builds video, social, and content campaigns for brands that want to land, not just launch — working at the intersection of craft and consumer strategy." />
+  <meta name="description" content="Light Agency builds video, social, and web campaigns for brands that want to land, not just launch — working at the intersection of craft and consumer strategy." />
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -34,13 +34,10 @@
   <!-- ====================== NAV ====================== -->
   <header class="nav">
     <a href="#top" class="nav__brand" aria-label="Light Agency — home">
-      <svg class="nav__logo" viewBox="0 0 40 36" aria-hidden="true" focusable="false">
-        <!-- Faceted metallic arrow sweeping up-right -->
-        <path d="M2 20 L38 2 L21 22 Z" fill="#DCE2E9" />
-        <path d="M2 20 L21 22 L24 34 Z" fill="#8E99A8" />
-        <path d="M38 2 L24 34 L21 22 Z" fill="#4A5568" />
-      </svg>
-      <span class="nav__brand-name">Light<span class="nav__brand-sub">Agency</span></span>
+      <span class="nav__wordmark">
+        <span class="nav__wordmark-name">Light</span>
+        <span class="nav__wordmark-sub">Agency</span>
+      </span>
     </a>
     <nav class="nav__menu" aria-label="Primary">
       <a href="#work">Work</a>
@@ -59,7 +56,7 @@
       </h1>
 
       <p class="hero__desc hero__fade-up" style="--fade-i: 2">
-        Video, social, and content campaigns for brands that want to land, not just launch.
+        Video, social, and web campaigns for brands that want to land, not just launch.
       </p>
 
       <a href="#work" class="hero__cta liquid-btn hero__fade-up" style="--fade-i: 3">
@@ -69,11 +66,36 @@
     </div>
   </section>
 
+  <!-- ====================== LOGO CLOUD ====================== -->
+  <section class="logo-cloud">
+    <div class="logo-cloud__inner">
+      <h2 class="logo-cloud__heading reveal">
+        <span class="logo-cloud__muted">A few of the brands</span><br>
+        <span class="logo-cloud__bold">that trusted our work.</span>
+      </h2>
+      <div class="logo-cloud__rule"></div>
+      <div class="logo-cloud__mask">
+        <div class="logo-cloud__track" id="logoTrack">
+          <img class="logo-cloud__img logo-cloud__img--lax" src="brand-lax.png" alt="LAX.com" loading="lazy">
+          <img class="logo-cloud__img logo-cloud__img--made" src="brand-madehoops.png" alt="MADE Hoops" loading="lazy">
+          <img class="logo-cloud__img logo-cloud__img--fastbreak" src="brand-fastbreak.png" alt="Fastbreak AI" loading="lazy">
+          <img class="logo-cloud__img logo-cloud__img--dwell" src="brand-dwell.png" alt="Dwell Interiors" loading="lazy">
+          <img class="logo-cloud__img logo-cloud__img--coolam" src="brand-coolam.png" alt="Coolam" loading="lazy">
+          <img class="logo-cloud__img logo-cloud__img--lax" src="brand-lax.png" alt="" loading="lazy" aria-hidden="true">
+          <img class="logo-cloud__img logo-cloud__img--made" src="brand-madehoops.png" alt="" loading="lazy" aria-hidden="true">
+          <img class="logo-cloud__img logo-cloud__img--fastbreak" src="brand-fastbreak.png" alt="" loading="lazy" aria-hidden="true">
+          <img class="logo-cloud__img logo-cloud__img--dwell" src="brand-dwell.png" alt="" loading="lazy" aria-hidden="true">
+          <img class="logo-cloud__img logo-cloud__img--coolam" src="brand-coolam.png" alt="" loading="lazy" aria-hidden="true">
+        </div>
+      </div>
+      <div class="logo-cloud__rule"></div>
+    </div>
+  </section>
+
   <!-- ====================== WORK ====================== -->
   <section id="work" class="work">
     <div class="section-head">
       <span class="section-num reveal">01 — Selected Work</span>
-      <h2 class="reveal">Recent <em class="gradient-text">work.</em></h2>
     </div>
 
     <div class="work__grid">
@@ -176,7 +198,6 @@
 
       <figure class="about__portrait reveal">
         <img src="staff-02462.jpg" alt="Sam Light with camera" loading="lazy" />
-        <figcaption>Behind the lens · Austin, TX</figcaption>
       </figure>
     </div>
   </section>
@@ -234,14 +255,14 @@
       <span class="section-num reveal">04 — Contact</span>
       <h2 class="contact__heading reveal">
         Got a brief?<br />
-        <em class="gradient-text">Let's talk.</em>
+        <em>Let's talk.</em>
       </h2>
       <a href="mailto:samlight@utexas.edu" class="contact__email liquid-btn liquid-btn--pill reveal">
         <span class="liquid-btn__glass" aria-hidden="true"></span>
         <span class="liquid-btn__label">samlight@utexas.edu</span>
       </a>
       <div class="contact__links reveal">
-        <a href="https://www.instagram.com/samlightcreative/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+        <a href="https://www.instagram.com/lightagency.io" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
         <a href="https://www.linkedin.com/in/samuel-light/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
     </div>
