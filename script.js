@@ -320,6 +320,56 @@
     }
   }
 
+  /* --------------------------------------------------------
+     Logo cloud — infinite horizontal scroll, slows on hover
+     -------------------------------------------------------- */
+  (function () {
+    const track = document.getElementById('logoTrack');
+    if (!track) return;
+
+    const mask = track.parentElement;
+    let pos = 0;
+    let currentSpeed = 0;
+    const normalSpeed = 0.9;
+    const hoverSpeed  = 0.22;
+    let hovering = false;
+    let started  = false;
+
+    function tick() {
+      const target = hovering ? hoverSpeed : normalSpeed;
+      currentSpeed += (target - currentSpeed) * 0.05;
+
+      pos -= currentSpeed;
+      const half = track.scrollWidth / 2;
+      if (half > 0 && pos < -half) pos += half;
+
+      track.style.transform = `translateX(${pos}px)`;
+      requestAnimationFrame(tick);
+    }
+
+    function start() {
+      if (started) return;
+      started = true;
+      requestAnimationFrame(tick);
+    }
+
+    mask.addEventListener('mouseenter', () => { hovering = true; });
+    mask.addEventListener('mouseleave', () => { hovering = false; });
+
+    // Start as soon as any pixel of the section enters view.
+    // rootMargin fires 80px before the section reaches the bottom of the
+    // viewport so the track is already moving when eyes land on it.
+    const cloudSection = track.closest('.logo-cloud');
+    if (cloudSection && 'IntersectionObserver' in window) {
+      const cloudIO = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) { cloudIO.disconnect(); start(); }
+      }, { threshold: 0, rootMargin: '0px 0px -80px 0px' });
+      cloudIO.observe(cloudSection);
+    } else {
+      start();
+    }
+  }());
+
   /* Carousel removed — hero is now just the centered text stack. */
 
   /* Hero parallax removed — the marquee is the hero's motion anchor now,
