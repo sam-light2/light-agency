@@ -370,6 +370,28 @@
     }
   }());
 
+  /* --------------------------------------------------------
+     Contact form — build a pre-filled mailto: from field values
+     so all data arrives in the email body, not just an empty draft.
+     -------------------------------------------------------- */
+  const contactForm = document.querySelector('.contact__form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name    = (document.getElementById('cf-name')?.value    || '').trim();
+      const phone   = (document.getElementById('cf-phone')?.value   || '').trim();
+      const email   = (document.getElementById('cf-email')?.value   || '').trim();
+      const message = (document.getElementById('cf-message')?.value || '').trim();
+
+      const subject = encodeURIComponent(`New brief from ${name}`);
+      const body    = encodeURIComponent(
+        `Name: ${name}\nPhone: ${phone || '—'}\nEmail: ${email}\n\nMessage:\n${message}`
+      );
+
+      window.location.href = `mailto:samlight@utexas.edu?subject=${subject}&body=${body}`;
+    });
+  }
+
   /* Carousel removed — hero is now just the centered text stack. */
 
   /* Hero parallax removed — the marquee is the hero's motion anchor now,
