@@ -290,7 +290,7 @@ body::before {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: var(--ink) url('media/sequence2.JPG') center 20% / cover no-repeat;
+  background: var(--ink) url('sequence2.JPG') center 20% / cover no-repeat;
   color: var(--cream);
 }
 
