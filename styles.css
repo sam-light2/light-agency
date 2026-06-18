@@ -345,7 +345,7 @@ body::before {
 .hero__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(36px, 5.6vw, 84px);
+  font-size: clamp(40px, 6.2vw, 92px);
   line-height: 0.98;
   letter-spacing: -0.035em;
   color: var(--cream);
@@ -518,7 +518,7 @@ body::before {
 .work {
   /* Reduced top padding because stats section now sits directly above
      and already provides ~80px of buffer at its bottom. */
-  padding: 200px 0 60px;
+  padding: 120px 0 60px;
   position: relative;
 }
 
@@ -947,7 +947,7 @@ body::before {
    Photo dominates the left; copy stacks cleanly on the right.
    ============================================================ */
 .about {
-  padding: 120px 0 140px;
+  padding: 200px 0 140px;
 }
 
 .about__spread {
@@ -960,8 +960,9 @@ body::before {
   align-items: start;
 }
 
-/* ---------- Portrait — left column, tall plate ---------- */
+/* ---------- Portrait — right column, tall plate ---------- */
 .about__portrait {
+  order: 2;
   margin: 0;
   position: relative;
   isolation: isolate;
@@ -969,14 +970,6 @@ body::before {
     drop-shadow(0 28px 48px rgba(24, 22, 15, 0.20))
     drop-shadow(0 8px 18px rgba(24, 22, 15, 0.12))
     drop-shadow(0 2px 4px  rgba(24, 22, 15, 0.08));
-  transition: filter 0.5s var(--ease), transform 0.5s var(--ease);
-}
-.about__portrait:hover {
-  filter:
-    drop-shadow(0 34px 56px rgba(24, 22, 15, 0.26))
-    drop-shadow(0 10px 22px rgba(62, 106, 92, 0.14))
-    drop-shadow(0 2px 4px   rgba(24, 22, 15, 0.08));
-  transform: translateY(-4px);
 }
 
 .about__portrait::before {
@@ -994,7 +987,7 @@ body::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 30%;
   filter: saturate(1.02) contrast(1.03) brightness(1.01);
   display: block;
   border-radius: 24px;
@@ -1003,15 +996,17 @@ body::before {
     inset 0 -80px 120px -60px rgba(18, 14, 10, 0.45);
 }
 
-/* ---------- Copy — right column, stacked ---------- */
+/* ---------- Copy — left column, stacked ---------- */
 .about__copy {
+  order: 1;
+}
   display: flex;
   flex-direction: column;
   padding-top: 12px;
 }
 
 .about__copy .section-num {
-  margin-bottom: 48px;
+  margin-bottom: 80px;
 }
 
 .about__name {
@@ -1039,7 +1034,7 @@ body::before {
   line-height: 1;
   padding-top: 24px;
   border-top: 1px solid var(--rule);
-  margin-bottom: 44px;
+  margin-bottom: 20px;
 }
 
 .about__bio-lead {
@@ -1111,7 +1106,7 @@ body::before {
    CONTACT — two-column: info + contact details left, form card right
    ============================================================ */
 .contact {
-  padding: 160px var(--pad-x) 80px;
+  padding: 220px var(--pad-x) 140px;
   background: var(--cream);
   position: relative;
   overflow: hidden;
@@ -1365,14 +1360,8 @@ body::before {
 .about__bio .reveal:nth-child(2) { transition-delay: 0.35s; }
 .about__portrait.reveal { transition-delay: 0.1s; }
 
-/* Portrait: subtle zoom on hover, plus a refined image reveal */
-.about__portrait img {
-  transition: transform 1.1s var(--ease), filter 0.6s var(--ease);
-}
-.about__portrait:hover img {
-  transform: scale(1.04);
-  filter: saturate(1.1) contrast(1.05);
-}
+/* Portrait image reveal */
+.about__portrait img {}
 
 
 /* Reveal variant: portrait scales in from a clip */
@@ -1556,7 +1545,7 @@ body::before {
   -webkit-text-fill-color: rgb(242, 237, 227);
   animation:
     gradientShift 9s ease-in-out infinite,
-    inlineReveal 14s ease-in-out infinite;
+    inlineReveal 2s ease-in-out forwards;
   animation-delay: var(--hl-delay, 0s);
   will-change: background-position, color;
 }
@@ -1565,21 +1554,13 @@ body::before {
    Alpha-only interpolation (same RGB) avoids a muddy mid-fade.
    Wider fade-in/out bands so each transition is slow and gradual. */
 @keyframes inlineReveal {
-  0%, 5% {
+  0% {
     color: rgb(242, 237, 227);
     -webkit-text-fill-color: rgb(242, 237, 227);
   }
-  22% {
+  100% {
     color: rgba(242, 237, 227, 0);
     -webkit-text-fill-color: rgba(242, 237, 227, 0);
-  }
-  82% {
-    color: rgba(242, 237, 227, 0);
-    -webkit-text-fill-color: rgba(242, 237, 227, 0);
-  }
-  98%, 100% {
-    color: rgb(242, 237, 227);
-    -webkit-text-fill-color: rgb(242, 237, 227);
   }
 }
 
@@ -1828,15 +1809,15 @@ body::before {
   .stats__grid { grid-template-columns: 1fr; gap: 12px; }
   .stats__grid > :last-child { grid-column: auto; }
   /* Compact dot-cards on phones — much shorter, smaller numerals */
-  .dot-card { padding: 5px; }
+  .dot-card { padding: 3px; }
   .dot-card__card {
-    padding: 18px 20px 16px;
-    min-height: 88px;
-    border-radius: 14px;
+    padding: 14px 16px 12px;
+    min-height: 68px;
+    border-radius: 12px;
   }
-  .dot-card__value { font-size: 32px; }
-  .dot-card__label { font-size: 9.5px; margin-top: 6px; }
-  .dot-card__dot { width: 7px; height: 7px; }
+  .dot-card__value { font-size: 26px; }
+  .dot-card__label { font-size: 8.5px; margin-top: 4px; letter-spacing: 0.1em; }
+  .dot-card__dot { width: 6px; height: 6px; }
 }
 
 /* ---------- dot-card (orbiting dot around a stat tile) ---------- */
@@ -1963,7 +1944,7 @@ body::before {
 /* ====================== LOGO CLOUD ====================== */
 .logo-cloud {
   background: var(--cream);
-  padding: 180px 0 108px;
+  padding: 230px 0 108px;
 }
 .logo-cloud__inner {
   max-width: 1080px;
