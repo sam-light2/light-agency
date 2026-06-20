@@ -1814,8 +1814,9 @@ body::before {
   flex-direction: column;
 }
 
-/* The orbiting dot — moves around the outer perimeter */
+/* Orbiting dot removed — kept in markup but hidden */
 .dot-card__dot {
+  display: none;
   position: absolute;
   top: 10%;
   right: 10%;
