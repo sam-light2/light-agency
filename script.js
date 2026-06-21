@@ -1,5 +1,5 @@
 /* ============================================================
-   [Your Name] — Portfolio
+   Light Agency — Portfolio
    Vanilla JS: cursor, scroll reveals, hover states, year stamp
    ============================================================ */
 
